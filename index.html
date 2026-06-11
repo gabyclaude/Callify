@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Callify relance automatiquement vos paniers abandonnés Shopify par appel téléphonique IA — jusqu'à 3 tentatives, 0 intervention humaine, +15% de récupération estimée.">
+<meta property="og:title" content="Callify — Relance automatisée de paniers abandonnés Shopify">
+<meta property="og:description" content="Callify appelle vos clients jusqu'à 3 fois, gère leurs objections en temps réel et finalise la commande — 100% automatisé, 0 intervention humaine.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Callify">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#96BF48">
+<title>Callify — Relance automatisée de paniers abandonnés Shopify</title>
+
+<!-- Favicon inline SVG -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2396BF48'/%3E%3Cpath d='M9 9s-2 0-2 2 0 5 4 9 8 5 10 5 2-2 2-2l-1.5-3s-2-.5-3 .5-2-.5-4-2.5-2-3.5-1-4.5.5-3 .5-3L9 9z' fill='%23000' opacity='.85'/%3E%3Cpath d='M21 8v4M23 10h-4' stroke='%23000' stroke-width='1.5' stroke-linecap='round' opacity='.85'/%3E%3C/svg%3E">
+
+<!-- Google Fonts — display=swap for performance -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+
+<style>
+@keyframes pls{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+@keyframes scan{0%{top:-2px;opacity:0}10%{opacity:.6}90%{opacity:.3}100%{top:100%;opacity:0}}
+@keyframes fw{0%{background:rgba(150,191,72,0.12)}100%{background:transparent}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes valFlash{0%{opacity:.3;transform:translateY(-6px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes confettiFall{0%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(0) rotate(var(--rot))}}
+@keyframes shimmer{0%{left:-80%}100%{left:150%}}
+@keyframes logoGlow{0%,100%{filter:drop-shadow(0 0 8px rgba(150,191,72,.5))}50%{filter:drop-shadow(0 0 16px rgba(150,191,72,.9))}}
+@keyframes borderPulse{0%,100%{box-shadow:0 0 0 0 rgba(150,191,72,0)}50%{box-shadow:0 0 0 4px rgba(150,191,72,.15)}}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --g:#96BF48;--g2:#b8e05a;--gd:#5E8E3E;--gs:rgba(150,191,72,0.08);
+  --bg:#060606;--s1:#0c0c0c;--s2:#111;
+  --bd:rgba(255,255,255,0.07);--bd2:rgba(255,255,255,0.12);
+  --tx:#f2f2f2;--mx:rgba(255,255,255,0.42);--dx:rgba(255,255,255,0.18);
+  --mono:'JetBrains Mono',monospace;
+  --nav-h:57px;
+}
+html,body{background:var(--bg);color:var(--tx);font-family:'DM Sans',sans-serif;font-size:14px;overflow-x:hidden;line-height:1.6}
+canvas#c{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.page{position:relative;z-index:1}
+
+/* ========= NAV ========= */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid rgba(150,191,72,0.08);background:rgba(6,6,6,0.82);backdrop-filter:blur(24px);position:sticky;top:0;z-index:100;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .3s}
+.nav.hide{transform:translateY(-100%)}
+.logo{display:flex;align-items:center;gap:9px;cursor:pointer}
+.logo img{width:26px;height:26px;object-fit:contain;animation:logoGlow 3s ease-in-out infinite}
+.logo-t{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;color:#fff;letter-spacing:-.4px}
+.nl{display:flex;gap:2px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:3px}
+.nl a{font-size:12px;color:var(--mx);text-decoration:none;padding:5px 14px;border-radius:7px;transition:all .18s;font-weight:500}
+.nl a:hover{background:rgba(150,191,72,0.08);color:#fff}
+.ncta{background:linear-gradient(135deg,var(--g),var(--gd));color:#000;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;padding:8px 18px;border-radius:8px;border:none;cursor:pointer;letter-spacing:.3px;box-shadow:0 0 20px rgba(150,191,72,0.25);transition:all .2s;position:relative;overflow:hidden}
+.ncta::after{content:'';position:absolute;top:0;left:-80%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transform:skewX(-15deg);pointer-events:none}
+.ncta:hover{box-shadow:0 0 32px rgba(150,191,72,0.45);transform:translateY(-1px)}
+.ncta:hover::after{animation:shimmer .55s ease forwards}
+
+/* Hamburger */
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:6px;z-index:101}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .3s cubic-bezier(.16,1,.3,1);transform-origin:center}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* Mobile menu */
+.mob-menu{position:fixed;top:0;left:0;right:0;z-index:98;background:rgba(5,5,5,.97);backdrop-filter:blur(30px);border-bottom:1px solid rgba(150,191,72,0.15);padding:calc(var(--nav-h) + 16px) 24px 28px;transform:translateY(-110%);transition:transform .4s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column;gap:0}
+.mob-menu.open{transform:translateY(0)}
+.mob-menu a{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;color:rgba(255,255,255,.65);text-decoration:none;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05);transition:color .2s, padding-left .2s}
+.mob-menu a:hover{color:var(--g);padding-left:6px}
+.mob-menu .mob-cta{margin-top:18px;background:linear-gradient(135deg,var(--g),var(--gd));color:#000;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;padding:14px;border-radius:10px;border:none;cursor:pointer;width:100%;letter-spacing:.2px}
+
+/* ========= SHOPIFY BAR ========= */
+.shopify-bar{display:flex;align-items:center;justify-content:center;gap:10px;background:rgba(150,191,72,0.04);border-top:1px solid rgba(150,191,72,0.08);border-bottom:1px solid rgba(150,191,72,0.08);padding:10px 32px;font-size:11px;color:var(--mx);font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:.3px;overflow-x:auto;white-space:nowrap}
+.shopify-bar b{color:#96BF48}
+.shopify-sep{width:1px;height:14px;background:rgba(255,255,255,0.08);flex-shrink:0}
+
+/* ========= HERO ========= */
+.hero{position:relative;padding:88px 32px 64px;text-align:center;overflow:hidden}
+.hero-scan{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(150,191,72,0.6),transparent);animation:scan 8s ease-in-out infinite;opacity:0}
+.bdg{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(150,191,72,0.25);background:rgba(150,191,72,0.05);color:var(--g);font-size:11px;padding:5px 14px;border-radius:20px;margin-bottom:26px;letter-spacing:.5px;font-family:'Space Grotesk',sans-serif;font-weight:600;opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s ease;will-change:opacity,transform}
+.bdg.anim-in{opacity:1;transform:translateY(0)}
+.pls{width:6px;height:6px;background:var(--g);border-radius:50%;animation:pls 2s infinite;box-shadow:0 0 6px rgba(150,191,72,0.8)}
+
+/* Word-split hero title */
+h1{font-family:'Space Grotesk',sans-serif;font-size:54px;font-weight:700;line-height:1.03;letter-spacing:-2.5px;color:#fff;max-width:660px;margin:0 auto 14px;text-shadow:0 0 80px rgba(150,191,72,0.12)}
+h1 em{font-style:normal;background:linear-gradient(135deg,#b8e05a,#96BF48,#6aaa2e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 20px rgba(150,191,72,0.4))}
+.w-wrap{display:inline-block;overflow:hidden;vertical-align:bottom;line-height:1.1}
+.w-inner{display:inline-block;transform:translateY(110%);opacity:0;transition:transform .65s cubic-bezier(.16,1,.3,1),opacity .5s ease;will-change:transform,opacity}
+h1.words-in .w-inner{transform:translateY(0);opacity:1}
+
+.hmeta{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:20px;opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease .45s;will-change:opacity,transform;flex-wrap:wrap}
+.hmeta.anim-in{opacity:1;transform:translateY(0)}
+.hmi{font-size:10px;color:var(--mx);font-family:var(--mono)}
+.hmi b{color:var(--g)}
+.hmi-sep{width:1px;height:10px;background:rgba(255,255,255,0.1)}
+.sub{font-size:15px;color:var(--mx);max-width:460px;margin:0 auto 36px;line-height:1.7;font-weight:300;opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease .55s;will-change:opacity,transform}
+.sub.anim-in{opacity:1;transform:translateY(0)}
+.cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease .7s;will-change:opacity,transform}
+.cta-row.anim-in{opacity:1;transform:translateY(0)}
+
+.btng{background:linear-gradient(135deg,#a8d456,#96BF48,#7aad2e);color:#000;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;padding:13px 28px;border-radius:10px;border:none;cursor:pointer;transition:all .2s;box-shadow:0 4px 24px rgba(150,191,72,0.3);position:relative;overflow:hidden}
+.btng::after{content:'';position:absolute;top:0;left:-80%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transform:skewX(-15deg);pointer-events:none}
+.btng:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(150,191,72,0.45)}
+.btng:hover::after{animation:shimmer .55s ease forwards}
+.btno{background:rgba(255,255,255,0.04);color:rgba(255,255,255,.65);font-size:13px;font-weight:400;padding:13px 24px;border-radius:10px;border:1px solid rgba(255,255,255,0.09);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;position:relative;overflow:hidden}
+.btno:hover{background:rgba(150,191,72,0.07);border-color:rgba(150,191,72,0.2);color:#fff}
+
+/* ========= STATUS BAR ========= */
+.sbar{display:flex;align-items:center;background:rgba(8,8,8,0.85);border-bottom:1px solid rgba(150,191,72,0.06);overflow-x:auto}
+.sbi{display:flex;align-items:center;gap:7px;padding:9px 22px;border-right:1px solid rgba(255,255,255,0.05);font-size:10px;color:var(--mx);font-family:var(--mono);white-space:nowrap;flex-shrink:0}
+.sbi:last-child{border:none}
+.sdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sbi b{color:#fff}
+
+/* ========= METRICS ========= */
+.mets{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(150,191,72,0.06);border:1px solid rgba(150,191,72,0.1);border-radius:16px;margin:24px 32px 0;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+.met{background:rgba(10,10,10,0.9);padding:24px;position:relative;overflow:hidden;transition:background .3s}
+.met:hover{background:rgba(14,14,14,0.95)}
+.met::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(150,191,72,0.6),transparent)}
+.met::after{content:'';position:absolute;bottom:0;right:0;width:80px;height:80px;background:radial-gradient(circle,rgba(150,191,72,0.06),transparent 70%);transition:opacity .3s}
+.met:hover::after{opacity:2}
+.mt{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ml{font-size:10px;color:var(--mx);letter-spacing:.8px;font-family:'Space Grotesk',sans-serif;font-weight:600;text-transform:uppercase}
+.mtr{font-size:10px;color:var(--g);background:rgba(150,191,72,0.08);border:1px solid rgba(150,191,72,0.18);padding:2px 8px;border-radius:4px;font-family:var(--mono);font-weight:700}
+.mv{font-family:var(--mono);font-size:40px;font-weight:700;color:#fff;letter-spacing:-2px;line-height:1;text-shadow:0 0 40px rgba(150,191,72,0.2);transition:text-shadow .3s}
+.met:hover .mv{text-shadow:0 0 60px rgba(150,191,72,0.35)}
+.mv span{background:linear-gradient(135deg,#c4e870,#96BF48);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ms{font-size:10px;color:var(--dx);margin-top:6px;font-family:var(--mono)}
+.msrc{font-size:9px;color:rgba(255,255,255,0.18);font-family:var(--mono);margin-top:3px}
+
+/* ========= DASHBOARD ========= */
+.dash{margin:20px 32px 0;border:1px solid rgba(150,191,72,0.1);border-radius:16px;overflow:hidden;background:rgba(10,10,10,0.7);backdrop-filter:blur(20px);box-shadow:0 24px 64px rgba(0,0,0,0.5)}
+.db{background:rgba(8,8,8,0.9);padding:11px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(150,191,72,0.07)}
+.wd{width:9px;height:9px;border-radius:50%}
+.dtl{font-size:11px;color:var(--mx);margin-left:6px;flex:1;font-family:var(--mono);font-weight:500}
+.lv{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--g);font-family:var(--mono);font-weight:700;letter-spacing:1px}
+.ld{width:5px;height:5px;background:var(--g);border-radius:50%;animation:pls 1.4s infinite;box-shadow:0 0 6px rgba(150,191,72,0.8)}
+.dbi{padding:16px}
+.dc{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.mc{background:rgba(14,14,14,0.8);border:1px solid rgba(150,191,72,0.08);border-radius:12px;padding:16px;position:relative;overflow:hidden;transition:border-color .3s,box-shadow .3s}
+.mc:hover{border-color:rgba(150,191,72,0.2);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,rgba(150,191,72,0.6),rgba(150,191,72,0.1),transparent)}
+.mc::after{content:'';position:absolute;top:0;left:0;bottom:0;width:1px;background:linear-gradient(180deg,rgba(150,191,72,0.3),transparent)}
+.mcl{font-size:10px;color:var(--mx);margin-bottom:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.6px}
+.mcv{font-family:var(--mono);font-size:28px;font-weight:700;color:#fff;letter-spacing:-1px}
+.mcv span{background:linear-gradient(135deg,#c4e870,#96BF48);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sp{height:28px;display:flex;align-items:flex-end;gap:2px;margin-top:10px}
+.sb{flex:1;background:rgba(150,191,72,0.08);border-radius:2px 2px 0 0;transition:height .4s cubic-bezier(.4,0,.2,1)}
+.sb.on{background:linear-gradient(180deg,#b8e05a,#7aad2e);box-shadow:0 0 6px rgba(150,191,72,0.4)}
+.cl{background:rgba(14,14,14,0.8);border:1px solid rgba(150,191,72,0.07);border-radius:12px;overflow:hidden}
+.cl-scroll{overflow-x:auto}
+.ch{display:grid;grid-template-columns:1fr 90px 70px 110px;padding:9px 14px;border-bottom:1px solid rgba(150,191,72,0.06);min-width:380px}
+.ch span{font-size:10px;color:var(--dx);letter-spacing:.9px;text-transform:uppercase;font-family:'Space Grotesk',sans-serif;font-weight:600}
+.cr{display:grid;grid-template-columns:1fr 90px 70px 110px;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.03);transition:background .25s;min-width:380px}
+.cr:last-child{border:none}
+.cr:hover{background:rgba(150,191,72,0.03)}
+.cr.nw{animation:fw 1.2s ease}
+.av{width:26px;height:26px;border-radius:6px;background:rgba(150,191,72,0.07);border:1px solid rgba(150,191,72,0.18);font-size:9px;font-weight:700;color:var(--g);display:inline-flex;align-items:center;justify-content:center;margin-right:9px;flex-shrink:0;font-family:var(--mono);transition:border-color .2s,background .2s}
+.cr:hover .av{background:rgba(150,191,72,0.12);border-color:rgba(150,191,72,0.35)}
+.cn{font-size:12px;color:#fff;font-weight:500;display:flex;align-items:center}
+.cn.ps{font-family:var(--mono);font-size:11px;color:rgba(150,191,72,0.85)}
+.ca2{font-size:12px;font-weight:600;color:#fff;font-family:var(--mono)}
+.cd2{font-size:11px;color:var(--mx);font-family:var(--mono)}
+.pill{font-size:10px;padding:3px 9px;border-radius:4px;font-weight:700;font-family:'Space Grotesk',sans-serif}
+.pg{background:rgba(150,191,72,0.1);color:var(--g);border:1px solid rgba(150,191,72,0.2)}
+.pa{background:rgba(245,158,11,0.08);color:#F59E0B;border:1px solid rgba(245,158,11,0.18)}
+.pb{background:rgba(55,138,221,0.08);color:#378ADD;border:1px solid rgba(55,138,221,0.18)}
+.pr{background:rgba(226,75,74,0.08);color:#E24B4A;border:1px solid rgba(226,75,74,0.18)}
+
+/* ========= SCROLL ANIMATIONS ========= */
+.anim-ready{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+.anim-ready.anim-in{opacity:1;transform:translateY(0)}
+.anim-left{opacity:0;transform:translateX(-20px);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+.anim-left.anim-in{opacity:1;transform:translateX(0)}
+@media(prefers-reduced-motion:reduce){
+  .anim-ready,.anim-left,.w-inner,.bdg,.hmeta,.sub,.cta-row{opacity:1!important;transform:none!important;transition:none!important}
+  .w-inner{opacity:1!important;transform:none!important}
+}
+
+/* ========= SECTIONS ========= */
+.sec{padding:52px 32px}
+.stag{font-size:10px;color:var(--g);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;font-weight:700;font-family:'Space Grotesk',sans-serif}
+.stit{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:#fff;letter-spacing:-1px;margin-bottom:8px}
+.ssub{font-size:13px;color:var(--mx);line-height:1.65;margin-bottom:32px;font-weight:300;max-width:500px}
+
+/* ========= STEPS ========= */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.step{background:rgba(10,10,10,0.7);border:1px solid rgba(150,191,72,0.08);border-radius:14px;padding:22px;position:relative;overflow:hidden;transition:all .3s}
+.step:hover{border-color:rgba(150,191,72,0.28);transform:translateY(-5px);box-shadow:0 20px 54px rgba(0,0,0,0.45),0 0 36px rgba(150,191,72,0.07)}
+.sl{position:absolute;top:0;left:0;right:0;height:1.5px}
+.slf{height:100%;background:linear-gradient(90deg,var(--g),var(--g2));width:0;transition:width 1.3s cubic-bezier(.4,0,.2,1)}
+.sn{font-size:10px;color:var(--g);font-weight:700;letter-spacing:2px;margin-bottom:16px;font-family:var(--mono)}
+.si2{width:36px;height:36px;background:rgba(150,191,72,0.06);border:1px solid rgba(150,191,72,0.15);border-radius:9px;display:grid;place-items:center;margin-bottom:14px;transition:all .3s}
+.step:hover .si2{background:rgba(150,191,72,0.12);border-color:rgba(150,191,72,0.3);box-shadow:0 0 12px rgba(150,191,72,0.15)}
+.si2 i{font-size:17px;color:var(--g)}
+.step h3{font-size:13px;font-weight:700;color:#fff;margin-bottom:6px;font-family:'Space Grotesk',sans-serif}
+.step p{font-size:12px;color:var(--mx);line-height:1.6;font-weight:300}
+
+/* ========= BLOC SUR-MESURE ========= */
+.custom-block{margin:0 32px;background:rgba(150,191,72,0.04);border:1px solid rgba(150,191,72,0.2);border-radius:16px;padding:28px 32px;position:relative;overflow:hidden;transition:border-color .3s,box-shadow .3s}
+.custom-block:hover{border-color:rgba(150,191,72,0.35);box-shadow:0 0 40px rgba(150,191,72,0.06)}
+.custom-block::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--g),rgba(150,191,72,0.2),transparent)}
+.custom-block::after{content:'';position:absolute;top:0;left:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--g),transparent)}
+.custom-inner{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start}
+.custom-icon{width:44px;height:44px;background:rgba(150,191,72,0.1);border:1px solid rgba(150,191,72,0.25);border-radius:10px;display:grid;place-items:center;flex-shrink:0;transition:all .3s}
+.custom-block:hover .custom-icon{background:rgba(150,191,72,0.18);box-shadow:0 0 14px rgba(150,191,72,0.2)}
+.custom-icon i{font-size:20px;color:var(--g)}
+.custom-title{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:6px;letter-spacing:-.3px}
+.custom-text{font-size:13px;color:var(--mx);line-height:1.7;font-weight:300}
+.custom-text b{color:var(--g);font-weight:600}
+.custom-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.ctag{font-size:10px;font-family:var(--mono);color:var(--g);background:rgba(150,191,72,0.08);border:1px solid rgba(150,191,72,0.15);padding:3px 10px;border-radius:4px;font-weight:600;transition:all .2s;cursor:default}
+.ctag:hover{background:rgba(150,191,72,0.15);border-color:rgba(150,191,72,0.3)}
+
+/* ========= COMPARATIF ========= */
+.vs-wrap{background:rgba(10,10,10,0.7);border:1px solid rgba(150,191,72,0.1);border-radius:18px;overflow:hidden;backdrop-filter:blur(20px)}
+.vs-wrap::before{content:'';display:block;height:1px;background:linear-gradient(90deg,transparent,rgba(150,191,72,0.5),transparent)}
+.vs-header{display:grid;grid-template-columns:1fr 1fr 1fr;padding:16px 24px;border-bottom:1px solid rgba(255,255,255,0.05);min-width:480px}
+.vs-col-title{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;text-align:center}
+.vs-col-title.green{color:var(--g)}
+.vs-col-title.gray{color:var(--mx)}
+.vs-scroll{overflow-x:auto}
+.vs-row{display:grid;grid-template-columns:1fr 1fr 1fr;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,0.03);align-items:center;transition:background .2s;min-width:480px}
+.vs-row:last-child{border:none}
+.vs-row:hover{background:rgba(150,191,72,0.03)}
+.vs-criterion{font-size:12px;color:var(--mx);font-weight:400;font-family:'DM Sans',sans-serif}
+.vs-cell{text-align:center;font-size:12px}
+.vs-check{color:var(--g);font-size:16px}
+.vs-cross{color:rgba(226,75,74,0.7);font-size:16px}
+.vs-val{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--g);font-weight:500}
+.vs-val-gray{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--mx)}
+
+/* ========= CANAUX ========= */
+.chan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.chan-card{background:rgba(10,10,10,0.7);border:1px solid rgba(150,191,72,0.07);border-radius:14px;padding:20px;text-align:center;position:relative;overflow:hidden;transition:all .3s}
+.chan-card:hover{border-color:rgba(150,191,72,0.2);transform:translateY(-4px);box-shadow:0 16px 44px rgba(0,0,0,0.4),0 0 28px rgba(150,191,72,0.05)}
+.chan-card.best{border-color:rgba(150,191,72,0.3);background:rgba(150,191,72,0.04);box-shadow:0 0 30px rgba(150,191,72,0.08)}
+.chan-card.best:hover{border-color:rgba(150,191,72,0.5);box-shadow:0 20px 50px rgba(0,0,0,0.45),0 0 40px rgba(150,191,72,0.12)}
+.chan-card.best::before{content:'CALLIFY';position:absolute;top:10px;right:10px;font-size:8px;color:var(--g);font-family:var(--mono);font-weight:700;letter-spacing:1px;background:rgba(150,191,72,0.12);padding:2px 7px;border-radius:3px;border:1px solid rgba(150,191,72,0.2)}
+.chan-logo{width:40px;height:40px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center}
+.chan-name{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#fff;margin-bottom:10px}
+.chan-rate{font-family:var(--mono);font-size:28px;font-weight:700;margin-bottom:4px}
+.chan-rate.green{background:linear-gradient(135deg,#c4e870,#96BF48);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.chan-rate.white{color:#fff}
+.chan-label{font-size:10px;color:var(--mx);font-family:var(--mono);margin-bottom:10px}
+.chan-bar-bg{height:3px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;margin-bottom:6px}
+.chan-bar-fill{height:100%;border-radius:2px;transition:width 1.5s cubic-bezier(.4,0,.2,1)}
+.chan-src{font-size:9px;color:rgba(255,255,255,0.2);font-family:var(--mono)}
+
+/* ========= ROI ========= */
+.roi-wrap{margin:0 32px;background:rgba(10,10,10,0.7);border:1px solid rgba(150,191,72,0.1);border-radius:18px;padding:36px;position:relative;overflow:hidden;backdrop-filter:blur(20px)}
+.roi-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(150,191,72,0.5),transparent)}
+.roi-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.roi-left h2{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#fff;letter-spacing:-.8px;margin-bottom:6px}
+.roi-left p{font-size:13px;color:var(--mx);margin-bottom:24px;font-weight:300;line-height:1.65}
+.roi-field{margin-bottom:16px}
+.roi-field label{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--mx);font-family:'Space Grotesk',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px}
+.roi-field label span{font-family:var(--mono);color:var(--g);font-size:13px;font-weight:700;text-transform:none;letter-spacing:0}
+input[type=range]{width:100%;-webkit-appearance:none;height:3px;border-radius:2px;background:rgba(255,255,255,0.08);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;background:var(--g);border-radius:50%;cursor:pointer;box-shadow:0 0 10px rgba(150,191,72,0.5);transition:box-shadow .2s,transform .2s}
+input[type=range]:hover::-webkit-slider-thumb{box-shadow:0 0 18px rgba(150,191,72,0.7);transform:scale(1.15)}
+.tentatives{margin-top:20px;border:1px solid rgba(150,191,72,0.1);border-radius:10px;overflow:hidden}
+.tent-header{background:rgba(150,191,72,0.06);padding:10px 14px;font-size:10px;color:var(--g);font-weight:700;letter-spacing:1px;text-transform:uppercase;font-family:var(--mono)}
+.tent-row{display:grid;grid-template-columns:80px 1fr auto;gap:12px;align-items:center;padding:9px 14px;border-top:1px solid rgba(255,255,255,0.04)}
+.tent-label{font-size:10px;color:var(--mx);font-family:var(--mono)}
+.tent-bar-bg{height:3px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden}
+.tent-bar-fill{height:100%;border-radius:2px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+.tent-val{font-size:11px;font-family:var(--mono);font-weight:700;color:var(--g);white-space:nowrap;min-width:40px;text-align:right}
+.roi-results{background:rgba(6,6,6,0.6);border:1px solid rgba(150,191,72,0.12);border-radius:14px;padding:24px;position:relative;overflow:hidden}
+.roi-results::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--g),transparent)}
+.roi-results::after{content:'';position:absolute;top:0;left:0;bottom:0;width:1px;background:linear-gradient(180deg,rgba(150,191,72,0.4),transparent)}
+.roi-tag{font-size:10px;color:var(--g);letter-spacing:1.5px;text-transform:uppercase;font-family:'Space Grotesk',sans-serif;font-weight:700;margin-bottom:18px}
+.roi-item{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.roi-item:last-child{border:none;margin:0;padding:0}
+.roi-rl{font-size:11px;color:var(--mx);font-family:'Space Grotesk',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.roi-rv{font-family:var(--mono);font-size:26px;font-weight:700;background:linear-gradient(135deg,#c4e870,#96BF48);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-1px;transition:opacity .25s}
+.roi-rv.flash{animation:valFlash .35s ease}
+.roi-rsub{font-size:10px;color:var(--dx);font-family:var(--mono);margin-top:2px}
+.roi-note{font-size:9px;color:rgba(255,255,255,0.18);font-family:var(--mono);margin-top:16px;line-height:1.7;border-top:1px solid rgba(255,255,255,0.04);padding-top:12px}
+
+/* ========= DEMO ========= */
+.demo-wrap{margin:0 32px;background:rgba(10,10,10,0.7);border:1px solid rgba(150,191,72,0.1);border-radius:18px;overflow:hidden}
+.demo-wrap::before{content:'';display:block;height:1px;background:linear-gradient(90deg,transparent,rgba(150,191,72,0.5),transparent)}
+.demo-inner{padding:24px 32px 32px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.player-card{background:rgba(6,6,6,0.6);border:1px solid rgba(150,191,72,0.1);border-radius:14px;padding:24px;position:relative;overflow:hidden}
+.player-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--g),transparent)}
+.player-label{font-size:10px;color:var(--g);font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px}
+.call-visual{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.call-avatar{width:44px;height:44px;border-radius:10px;background:rgba(150,191,72,0.08);border:1px solid rgba(150,191,72,0.2);display:grid;place-items:center;flex-shrink:0;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--g)}
+.call-name-big{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
+.call-detail{font-size:11px;color:var(--mx);font-family:var(--mono)}
+.call-status{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--g);font-family:var(--mono);font-weight:700;margin-bottom:14px}
+.waveform{height:44px;display:flex;align-items:center;gap:2px;margin-bottom:14px}
+.wave-bar{width:3px;border-radius:2px;background:rgba(150,191,72,0.15);transition:height .08s ease}
+.wave-bar.active{background:var(--g);box-shadow:0 0 6px rgba(150,191,72,0.5)}
+.play-btn{width:100%;background:linear-gradient(135deg,#a8d456,#96BF48);color:#000;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;padding:11px;border-radius:9px;border:none;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;position:relative;overflow:hidden}
+.play-btn::after{content:'';position:absolute;top:0;left:-80%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transform:skewX(-15deg);pointer-events:none}
+.play-btn:hover{opacity:.9;transform:translateY(-1px)}
+.play-btn:hover::after{animation:shimmer .55s ease forwards}
+.play-note{font-size:9px;color:rgba(255,255,255,0.2);font-family:var(--mono);text-align:center;margin-top:8px}
+.transcript-card{background:rgba(6,6,6,0.6);border:1px solid rgba(150,191,72,0.08);border-radius:14px;padding:22px}
+.transcript-label{font-size:10px;color:var(--g);font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
+.tl{display:flex;gap:9px;margin-bottom:12px;align-items:flex-start}
+.tl-who{font-size:9px;font-family:var(--mono);font-weight:700;padding:2px 7px;border-radius:4px;flex-shrink:0;margin-top:2px}
+.tl-s{background:rgba(150,191,72,0.1);color:var(--g);border:1px solid rgba(150,191,72,0.2)}
+.tl-c{background:rgba(55,138,221,0.1);color:#378ADD;border:1px solid rgba(55,138,221,0.2)}
+.tl-txt{font-size:12px;color:var(--mx);line-height:1.6;font-weight:300}
+.tl-txt b{color:#fff;font-weight:500}
+.result-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(150,191,72,0.08);border:1px solid rgba(150,191,72,0.2);color:var(--g);font-size:11px;font-family:'Space Grotesk',sans-serif;font-weight:700;padding:6px 14px;border-radius:20px;margin-top:6px}
+
+/* ========= FORM ========= */
+.fw{margin:32px 32px 52px;background:rgba(10,10,10,0.7);border:1px solid rgba(150,191,72,0.1);border-radius:18px;padding:36px;position:relative;overflow:hidden;backdrop-filter:blur(20px)}
+.fw::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(150,191,72,0.5),transparent)}
+.fw::after{content:'';position:absolute;bottom:-100px;right:-60px;width:360px;height:360px;background:radial-gradient(circle,rgba(150,191,72,0.05),transparent 65%);pointer-events:none}
+.fh{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:#fff;letter-spacing:-.8px;margin-bottom:6px}
+.fp2{font-size:13px;color:var(--mx);margin-bottom:26px;font-weight:300}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.fl{display:flex;flex-direction:column;gap:5px}
+.fl label{font-size:10px;color:var(--mx);letter-spacing:.8px;text-transform:uppercase;font-weight:600;font-family:'Space Grotesk',sans-serif}
+.fl input,.fl select{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:11px 13px;color:#fff;font-size:13px;outline:none;transition:border-color .2s,background .2s,box-shadow .2s;font-family:'DM Sans',sans-serif;-webkit-appearance:none;appearance:none}
+.fl input:focus,.fl select:focus{border-color:rgba(150,191,72,0.55);background:rgba(150,191,72,0.04);box-shadow:0 0 0 3px rgba(150,191,72,0.07)}
+.fl input::placeholder{color:rgba(255,255,255,0.18)}
+.fl select option{background:#111;color:#fff}
+.fl input.err{border-color:rgba(226,75,74,0.5);background:rgba(226,75,74,0.03)}
+.fl input.ok{border-color:rgba(150,191,72,0.35)}
+.field-err{font-size:10px;color:#E24B4A;font-family:var(--mono);margin-top:2px;display:none}
+.field-err.show{display:block}
+.fb{width:100%;background:linear-gradient(135deg,#a8d456,#96BF48,#7aad2e);color:#000;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;padding:14px;border-radius:10px;border:none;cursor:pointer;margin-top:8px;letter-spacing:.2px;transition:all .2s;box-shadow:0 4px 24px rgba(150,191,72,0.25);display:flex;align-items:center;justify-content:center;gap:8px;position:relative;overflow:hidden}
+.fb::after{content:'';position:absolute;top:0;left:-80%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);transform:skewX(-15deg);pointer-events:none}
+.fb:hover:not(:disabled){opacity:.92;transform:translateY(-1px);box-shadow:0 8px 32px rgba(150,191,72,0.4)}
+.fb:hover::after{animation:shimmer .55s ease forwards}
+.fb:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.fb-spinner{display:inline-block;animation:spin .8s linear infinite;font-size:15px}
+.fok{display:none;text-align:center;padding:32px;position:relative;overflow:hidden}
+.fck{width:52px;height:52px;background:rgba(150,191,72,0.08);border:1px solid rgba(150,191,72,0.25);border-radius:50%;display:grid;place-items:center;margin:0 auto 14px;animation:borderPulse 2.5s ease-in-out infinite}
+.fck i{font-size:24px;color:var(--g)}
+.fok strong{font-family:'Space Grotesk',sans-serif;font-size:18px;color:#fff;display:block;margin-bottom:7px}
+.fok span{font-size:13px;color:var(--mx);font-weight:300}
+
+/* ========= FOOTER ========= */
+footer{border-top:1px solid rgba(150,191,72,0.07);padding:20px 32px;display:flex;justify-content:space-between;align-items:center;background:rgba(6,6,6,0.9);flex-wrap:wrap;gap:10px}
+.ftl{font-size:11px;color:var(--dx);font-family:var(--mono)}
+.ftr{display:flex;align-items:center;gap:8px}
+.ftr img{width:16px;height:16px;object-fit:contain;filter:drop-shadow(0 0 4px rgba(150,191,72,0.4));opacity:.7}
+.ftr span{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--g)}
+
+/* ========= RESPONSIVE 768px ========= */
+@media(max-width:768px){
+  :root{--nav-h:53px}
+  .hamburger{display:flex}
+  .nl,.ncta{display:none}
+  .nav{padding:12px 20px}
+  .shopify-bar{justify-content:flex-start;padding:8px 16px;font-size:10px}
+  .hero{padding:56px 20px 44px}
+  h1{font-size:36px;letter-spacing:-1.5px}
+  .hmeta{gap:8px}
+  .hmi-sep{display:none}
+  .hmi{font-size:9px}
+  .sub{font-size:14px;margin-bottom:28px}
+  .mets{grid-template-columns:1fr;margin:16px 16px 0;border-radius:12px}
+  .dash{margin:14px 16px 0;border-radius:12px}
+  .cl-scroll,.vs-scroll{-webkit-overflow-scrolling:touch}
+  .dc{grid-template-columns:1fr 1fr}
+  .sec{padding:36px 20px}
+  .steps{grid-template-columns:1fr}
+  .custom-block{margin:0 16px;padding:20px}
+  .custom-inner{grid-template-columns:1fr;gap:14px}
+  .chan-grid{grid-template-columns:1fr}
+  .roi-wrap{margin:0 16px;padding:22px 18px}
+  .roi-grid{grid-template-columns:1fr;gap:24px}
+  .demo-wrap{margin:0 16px}
+  .demo-inner{grid-template-columns:1fr;padding:16px 18px 20px}
+  .fw{margin:20px 16px 36px;padding:22px 18px}
+  .fr2{grid-template-columns:1fr}
+  footer{padding:16px 20px}
+  .stit{font-size:22px}
+  .vs-wrap{overflow-x:auto}
+}
+@media(max-width:480px){
+  h1{font-size:30px;letter-spacing:-1px}
+  .btng,.btno{font-size:12px;padding:11px 18px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="c"></canvas>
+<div class="page">
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu" aria-hidden="true">
+  <a href="#comment" onclick="closeMobMenu()">Comment ça marche</a>
+  <a href="#vs" onclick="closeMobMenu()">vs WhatsApp</a>
+  <a href="#roi" onclick="closeMobMenu()">ROI</a>
+  <a href="#demo" onclick="closeMobMenu()">Écouter un appel</a>
+  <button class="mob-cta" onclick="closeMobMenu();document.getElementById('form').scrollIntoView({behavior:'smooth'})">Démarrer →</button>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <img src="logo-callify.png" alt="Callify">
+    <span class="logo-t">Callify</span>
+  </div>
+  <div class="nl">
+    <a href="#comment">Comment ça marche</a>
+    <a href="#vs">vs WhatsApp</a>
+    <a href="#roi">ROI</a>
+    <a href="#demo">Écouter un appel</a>
+  </div>
+  <button class="ncta" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">Démarrer →</button>
+  <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" onclick="toggleMobMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- BARRE SHOPIFY -->
+<div class="shopify-bar">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M15.5 4.5C15.5 4.5 15.1 4.5 14.7 4.6C14.4 3.6 13.5 3 12.5 3C11.6 3 10.9 3.5 10.5 4.2C10.3 4.2 10.1 4.1 9.9 4.1C8.7 4.1 7.8 5 7.7 6.1L6 19.5L17 21L21 6L18.1 5.6C17.7 4.9 16.7 4.5 15.5 4.5Z" fill="#96BF48" fill-opacity="0.3" stroke="#96BF48" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <span>Callify est <b>exclusivement conçu pour Shopify</b></span>
+  <div class="shopify-sep"></div>
+  <span>Compatible uniquement avec les boutiques Shopify</span>
+  <div class="shopify-sep"></div>
+  <span>Installation <b>native</b> · Aucune intégration tierce requise</span>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-scan"></div>
+  <div class="bdg" id="heroBdg"><span class="pls"></span>Shopify exclusif · 3 tentatives · 100% des paniers</div>
+  <h1 id="heroTitle">Vos paniers abandonnés<br>relancés <em>automatiquement</em></h1>
+  <div class="hmeta" id="heroMeta">
+    <div class="hmi">v2.4.1 · <b>stable</b></div><div class="hmi-sep"></div>
+    <div class="hmi">uptime <b>99.98%</b></div><div class="hmi-sep"></div>
+    <div class="hmi">latence <b>&lt;4s</b></div><div class="hmi-sep"></div>
+    <div class="hmi">Shopify · EU · RGPD</div>
+  </div>
+  <p class="sub" id="heroSub">Callify appelle vos clients jusqu'à 3 fois, gère leurs objections en temps réel et finalise la commande — sur 100% de vos paniers abandonnés, sans aucune intervention.</p>
+  <div class="cta-row" id="heroCta">
+    <button class="btng" onclick="document.getElementById('roi').scrollIntoView({behavior:'smooth'})">Calculer mon ROI →</button>
+    <button class="btno" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">Écouter un appel</button>
+  </div>
+</div>
+
+<!-- STATUS BAR -->
+<div class="sbar">
+  <div class="sbi"><div class="sdot" style="background:#96BF48;box-shadow:0 0 6px rgba(150,191,72,.8)"></div>Système <b>opérationnel</b></div>
+  <div class="sbi"><div class="sdot" style="background:#96BF48;animation:pls 1.5s infinite"></div>Appels actifs <b id="ac">3</b></div>
+  <div class="sbi"><div class="sdot" style="background:#96bf48"></div>Shopify <b>connecté</b></div>
+  <div class="sbi"><div class="sdot" style="background:#96BF48"></div>Dernier appel <b id="lc">il y a 12s</b></div>
+</div>
+
+<!-- METRICS -->
+<div class="mets" id="mets">
+  <div class="met anim-ready"><div class="mt"><span class="ml">Taux d'abandon panier</span><span class="mtr">2024</span></div><div class="mv"><span id="mv1">70</span>%</div><div class="ms">7 clients sur 10 partent sans payer</div><div class="msrc">Baymard Institute, 2024 — 70,19%</div></div>
+  <div class="met anim-ready" style="transition-delay:.1s"><div class="mt"><span class="ml">Taux de contact</span><span class="mtr">3 tentatives</span></div><div class="mv"><span id="mv2">~87</span>%</div><div class="ms">des clients contactés sur 3 appels</div><div class="msrc">T1 50% + T2 25% + T3 12% des restants</div></div>
+  <div class="met anim-ready" style="transition-delay:.2s"><div class="mt"><span class="ml">Récupération estimée</span><span class="mtr">projection</span></div><div class="mv"><span id="mv3">&gt;15</span>%</div><div class="ms">des paniers abandonnés reconvertis</div><div class="msrc">Estimation raisonnée — données réelles post-déploiement</div></div>
+</div>
+
+<!-- DASHBOARD LIVE -->
+<div class="dash anim-ready" style="transition-delay:.05s">
+  <div class="db">
+    <div class="wd" style="background:#ff5f56"></div><div class="wd" style="background:#ffbd2e"></div><div class="wd" style="background:#27c93f"></div>
+    <span class="dtl">callify_dashboard — live_feed.json</span>
+    <span class="lv"><span class="ld"></span>EN DIRECT</span>
+  </div>
+  <div class="dbi">
+    <div class="dc">
+      <div class="mc"><div class="mcl">Appels aujourd'hui</div><div class="mcv" id="ct"><span>47</span></div><div class="sp" id="sp1"></div></div>
+      <div class="mc"><div class="mcl">CA récupéré (24h)</div><div class="mcv" id="ca"><span>1 247</span> €</div><div class="sp" id="sp2"></div></div>
+    </div>
+    <div class="cl">
+      <div class="cl-scroll">
+        <div class="ch"><span>Client</span><span>Montant</span><span>Durée</span><span>Statut</span></div>
+        <div id="tb"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMMENT ÇA MARCHE -->
+<div class="sec" id="comment">
+  <div class="stag anim-ready">Comment ça marche</div>
+  <div class="stit anim-ready" style="transition-delay:.08s">Trois étapes, zéro intervention</div>
+  <div class="ssub anim-ready" style="transition-delay:.14s">Callify se connecte à votre boutique Shopify en quelques minutes et prend en charge tout le processus de relance.</div>
+  <div class="steps">
+    <div class="step anim-ready"><div class="sl"><div class="slf" id="sf1"></div></div><div class="sn">01 —</div><div class="si2"><i class="ti ti-plug"></i></div><h3>Connexion Shopify</h3><p>Dès qu'un panier est abandonné, Callify vérifie en temps réel que la commande n'a pas été passée — puis déclenche la séquence d'appels.</p></div>
+    <div class="step anim-ready" style="transition-delay:.12s"><div class="sl"><div class="slf" id="sf2"></div></div><div class="sn">02 —</div><div class="si2"><i class="ti ti-phone-call"></i></div><h3>Jusqu'à 3 appels</h3><p>Callify appelle avec le prénom du client et le détail exact de son panier. Si pas de réponse, il rappelle — jusqu'à 3 fois, espacées intelligemment.</p></div>
+    <div class="step anim-ready" style="transition-delay:.22s"><div class="sl"><div class="slf" id="sf3"></div></div><div class="sn">03 —</div><div class="si2"><i class="ti ti-chart-bar"></i></div><h3>Suivi temps réel</h3><p>Chaque appel tracé : décroché, durée, résultat, CA récupéré. Statuts mis à jour automatiquement dans votre tableau de bord.</p></div>
+  </div>
+</div>
+
+<!-- BLOC SUR-MESURE -->
+<div class="custom-block anim-ready" id="surmesure">
+  <div class="custom-inner">
+    <div class="custom-icon"><i class="ti ti-adjustments" style="font-size:20px;color:var(--g)"></i></div>
+    <div>
+      <div class="custom-title">Chaque installation est configurée sur mesure pour votre boutique</div>
+      <div class="custom-text">
+        Callify n'est pas un outil générique qu'on branche et oublie. <b>Chaque déploiement est retravaillé et adapté</b> à votre univers : le ton de la voix, le vocabulaire employé, le script de l'appel — tout est calibré en fonction de votre positionnement, de vos produits et de votre clientèle.<br><br>
+        Une boutique <b>haut de gamme</b> ne s'adresse pas à ses clients de la même façon qu'une boutique <b>accessible</b>. Callify parle le langage de votre marque — pas un script générique.
+      </div>
+      <div class="custom-tags">
+        <span class="ctag">Ton adapté à votre marque</span>
+        <span class="ctag">Vocabulaire sur mesure</span>
+        <span class="ctag">Voix personnalisée</span>
+        <span class="ctag">Script calibré par gamme de prix</span>
+        <span class="ctag">Avatar client défini</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARATIF -->
+<div class="sec" id="vs" style="padding-top:32px">
+  <div class="stag anim-ready">Comparatif</div>
+  <div class="stit anim-ready" style="transition-delay:.08s">Callify vs WhatsApp</div>
+  <div class="ssub anim-ready" style="transition-delay:.14s">WhatsApp est aujourd'hui le meilleur canal de relance par message — 10 à 15% sur un seul envoi. Callify va structurellement plus loin.</div>
+  <div class="chan-grid" style="margin-bottom:24px">
+    <!-- EMAIL -->
+    <div class="chan-card anim-ready">
+      <div class="chan-logo">
+        <div style="width:40px;height:40px;border-radius:9px;background:rgba(255,255,255,0.06);display:grid;place-items:center">
+          <i class="ti ti-mail" style="font-size:22px;color:rgba(255,255,255,0.45)"></i>
+        </div>
+      </div>
+      <div class="chan-name">Email</div>
+      <div class="chan-rate white">5–10%</div>
+      <div class="chan-label">récupération · 1 envoi</div>
+      <div class="chan-bar-bg"><div class="chan-bar-fill" style="width:0;background:rgba(255,255,255,0.2)" id="bar1"></div></div>
+      <div class="chan-src">Source : Kanal, 2026</div>
+    </div>
+    <!-- WHATSAPP -->
+    <div class="chan-card anim-ready" style="transition-delay:.1s">
+      <div class="chan-logo">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-label="WhatsApp">
+          <rect width="40" height="40" rx="9" fill="#25D366" fill-opacity="0.12"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M20 10C14.48 10 10 14.48 10 20c0 2.12.66 4.09 1.79 5.71L10.5 30l4.41-1.27A9.96 9.96 0 0020 30c5.52 0 10-4.48 10-10S25.52 10 20 10z" fill="#25D366" fill-opacity="0.2" stroke="#25D366" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M16.5 17c-.3 0-.75.1-1.1.5-.37.43-.87 1.17-.87 2.5 0 1.35.9 2.65 1.03 2.83.14.17 1.74 2.8 4.3 3.8 2.1.84 2.56.67 3.03.63.47-.04 1.5-.6 1.72-1.2.22-.58.22-1.08.15-1.18-.07-.1-.27-.17-.57-.3-.3-.14-1.78-.88-2.06-.98-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.14-1.26-.46-2.4-1.48-.89-.79-1.49-1.76-1.66-2.06-.18-.3-.02-.46.13-.61.13-.13.3-.34.44-.5.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.14-.65-1.6-.9-2.19-.24-.57-.48-.5-.66-.5z" fill="#25D366"/>
+        </svg>
+      </div>
+      <div class="chan-name">WhatsApp</div>
+      <div class="chan-rate white">10–15%</div>
+      <div class="chan-label">récupération · 1 message</div>
+      <div class="chan-bar-bg"><div class="chan-bar-fill" style="width:0;background:#25D366" id="bar2"></div></div>
+      <div class="chan-src">Estimation marché 2026</div>
+    </div>
+    <!-- CALLIFY -->
+    <div class="chan-card best anim-ready" style="transition-delay:.2s">
+      <div class="chan-logo">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-label="Callify">
+          <rect width="40" height="40" rx="9" fill="rgba(150,191,72,0.12)"/>
+          <path d="M15 10C15 10 13 10 13 12C13 14 13 18.5 17.5 23C22 27.5 26.5 27.5 28.5 27.5C30.5 27.5 30.5 25.5 30.5 25.5L29 22.5C29 22.5 27 22 26 23C25 24 23.5 23 21 20.5C18.5 18 17.5 16.5 18.5 15.5C19.5 14.5 19 12.5 19 12.5L15 10Z" stroke="#96BF48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M24 10V14M26 12H22" stroke="#96BF48" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="chan-name">Callify</div>
+      <div class="chan-rate green">&gt;15%</div>
+      <div class="chan-label">estimé · 3 tentatives · 100% paniers</div>
+      <div class="chan-bar-bg"><div class="chan-bar-fill" style="width:0;background:linear-gradient(90deg,#96BF48,#b8e05a)" id="bar3"></div></div>
+      <div class="chan-src">Projection raisonnée — voir méthodologie ROI</div>
+    </div>
+  </div>
+  <div class="vs-wrap anim-ready">
+    <div class="vs-scroll">
+      <div class="vs-header"><div></div><div class="vs-col-title gray">WhatsApp</div><div class="vs-col-title green">Callify</div></div>
+      <div class="vs-row anim-ready"><div class="vs-criterion">Couvre 100% des paniers</div><div class="vs-cell"><span class="vs-check">✓</span></div><div class="vs-cell"><span class="vs-check">✓</span></div></div>
+      <div class="vs-row anim-ready" style="transition-delay:.06s"><div class="vs-criterion">Plusieurs tentatives par client</div><div class="vs-cell"><span class="vs-cross">✗</span></div><div class="vs-cell"><span class="vs-val">3 appels espacés</span></div></div>
+      <div class="vs-row anim-ready" style="transition-delay:.1s"><div class="vs-criterion">Gestion d'objection en temps réel</div><div class="vs-cell"><span class="vs-cross">✗</span></div><div class="vs-cell"><span class="vs-check">✓</span></div></div>
+      <div class="vs-row anim-ready" style="transition-delay:.14s"><div class="vs-criterion">Proposition commerciale adaptative</div><div class="vs-cell"><span class="vs-cross">✗</span></div><div class="vs-cell"><span class="vs-val">Réduction, livraison gratuite, etc.</span></div></div>
+      <div class="vs-row anim-ready" style="transition-delay:.18s"><div class="vs-criterion">Vérification commande avant contact</div><div class="vs-cell"><span class="vs-cross">✗</span></div><div class="vs-cell"><span class="vs-val">✓ Shopify temps réel</span></div></div>
+      <div class="vs-row anim-ready" style="transition-delay:.22s"><div class="vs-criterion">Durée d'attention du client</div><div class="vs-cell"><span class="vs-val-gray">3–5 secondes</span></div><div class="vs-cell"><span class="vs-val">~90 secondes</span></div></div>
+      <div class="vs-row anim-ready" style="transition-delay:.26s"><div class="vs-criterion">Script & ton adaptés à votre marque</div><div class="vs-cell"><span class="vs-cross">✗</span></div><div class="vs-cell"><span class="vs-val">✓ Sur mesure</span></div></div>
+      <div class="vs-row anim-ready" style="transition-delay:.3s"><div class="vs-criterion">Impact mémorisation marque</div><div class="vs-cell"><span class="vs-val-gray">Faible</span></div><div class="vs-cell"><span class="vs-val">Fort — conversation unique</span></div></div>
+      <div class="vs-row anim-ready" style="transition-delay:.34s"><div class="vs-criterion">Intervention humaine requise</div><div class="vs-cell"><span class="vs-val-gray">Non</span></div><div class="vs-cell"><span class="vs-val">Non</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ROI -->
+<div class="roi-wrap anim-ready" id="roi">
+  <div class="roi-grid">
+    <div class="roi-left">
+      <div class="stag">Calculateur ROI</div>
+      <h2>Combien pouvez-vous récupérer ?</h2>
+      <p>Chaque panier abandonné déclenche jusqu'à 3 appels — on rappelle jusqu'à ce que le client décroche. Au-delà de 3 tentatives sans réponse, le panier est abandonné.</p>
+      <div class="roi-field"><label>CA mensuel <span id="ca-label">50 000 €</span></label><input type="range" min="5000" max="500000" step="5000" value="50000" id="ca-slider" oninput="calcROI()"></div>
+      <div class="roi-field"><label>Panier moyen <span id="pm-label">85 €</span></label><input type="range" min="20" max="500" step="5" value="85" id="pm-slider" oninput="calcROI()"></div>
+      <div class="tentatives">
+        <div class="tent-header">Taux de contact cumulé — 3 tentatives</div>
+        <div class="tent-row"><div class="tent-label">Appel 1</div><div class="tent-bar-bg"><div class="tent-bar-fill" id="tb1" style="width:50%;background:rgba(150,191,72,0.4)"></div></div><div class="tent-val">50%</div></div>
+        <div class="tent-row"><div class="tent-label">Appel 2</div><div class="tent-bar-bg"><div class="tent-bar-fill" id="tb2" style="width:75%;background:rgba(150,191,72,0.65)"></div></div><div class="tent-val">+25%</div></div>
+        <div class="tent-row"><div class="tent-label">Appel 3</div><div class="tent-bar-bg"><div class="tent-bar-fill" id="tb3" style="width:87%;background:var(--g)"></div></div><div class="tent-val">+12%</div></div>
+        <div class="tent-row" style="background:rgba(150,191,72,0.04)"><div class="tent-label" style="color:#fff;font-weight:700">Total</div><div class="tent-bar-bg"><div class="tent-bar-fill" id="tb4" style="width:87%;background:linear-gradient(90deg,#96BF48,#b8e05a)"></div></div><div class="tent-val" id="tv4" style="color:#b8e05a">87%</div></div>
+      </div>
+    </div>
+    <div class="roi-results">
+      <div class="roi-tag">Projection mensuelle</div>
+      <div class="roi-item"><div class="roi-rl">Paniers abandonnés / mois</div><div class="roi-rv" id="r-paniers">412</div><div class="roi-rsub" id="r-sub1">sur ~588 paniers créés</div></div>
+      <div class="roi-item"><div class="roi-rl">Clients contactés (3 tentatives)</div><div class="roi-rv" id="r-contacts">358</div><div class="roi-rsub">~87% de taux de contact cumulé</div></div>
+      <div class="roi-item"><div class="roi-rl">CA récupéré / mois</div><div class="roi-rv" id="r-mensuel">6 068 €</div><div class="roi-rsub">~20% de conversion sur appels décrochés</div></div>
+      <div class="roi-item"><div class="roi-rl">CA récupéré / an</div><div class="roi-rv" id="r-annuel">72 816 €</div><div class="roi-rsub">sans aucune intervention humaine</div></div>
+      <div class="roi-note">Méthodologie : abandon 70% (Baymard, 2024) · 3 tentatives · T1 ~50%, T2 ~25%, T3 ~12% = ~87% contact · ~20% conversion sur décrochés (Optiserv, 2026) · taux global ~17%. Projections.</div>
+    </div>
+  </div>
+</div>
+
+<!-- DEMO -->
+<div class="sec" style="padding-bottom:0" id="demo">
+  <div class="stag anim-ready">Démonstration</div>
+  <div class="stit anim-ready" style="transition-delay:.08s">Voici à quoi ressemble un appel</div>
+  <div class="ssub anim-ready" style="transition-delay:.14s">Exemple — boutique mode, panier 127€, cliente décrochée au premier appel.</div>
+</div>
+<div class="demo-wrap">
+  <div class="demo-inner">
+    <div class="player-card anim-ready">
+      <div class="player-label">Appel en cours</div>
+      <div class="call-visual"><div class="call-avatar">CL</div><div><div class="call-name-big">Callify</div><div class="call-detail">→ Marie D. · +33 6 ·· ·· ·· ··</div></div></div>
+      <div class="call-status" id="call-status"><span class="pls"></span>En attente</div>
+      <div class="waveform" id="waveform"></div>
+      <button class="play-btn" id="play-btn" onclick="togglePlay()"><i class="ti ti-player-play" id="play-icon"></i><span id="play-label">Simuler l'appel</span></button>
+      <div class="play-note">Simulation visuelle · Branchez votre audio Vapi ici</div>
+    </div>
+    <div class="transcript-card anim-ready" style="transition-delay:.12s">
+      <div class="transcript-label">Transcription</div>
+      <div class="tl"><span class="tl-who tl-s">CALLIFY</span><div class="tl-txt">Bonjour, je suis l'assistante de <b>Fleur&amp;Mode</b>. Vous avez laissé <b>une robe Éclat d'été (89€)</b> dans votre panier. Je peux vous aider à finaliser ?</div></div>
+      <div class="tl"><span class="tl-who tl-c">MARIE</span><div class="tl-txt">Ah oui, j'hésitais à cause des frais de livraison...</div></div>
+      <div class="tl"><span class="tl-who tl-s">CALLIFY</span><div class="tl-txt">Je comprends ! Je vous offre la <b>livraison gratuite</b> si vous finalisez aujourd'hui. Votre panier est de <b>127€</b> — on procède ensemble ?</div></div>
+      <div class="tl"><span class="tl-who tl-c">MARIE</span><div class="tl-txt">Oui, volontiers, merci !</div></div>
+      <div class="result-badge"><i class="ti ti-check"></i> 127€ récupérés · 1m 34s · Tentative 1/3</div>
+    </div>
+  </div>
+</div>
+
+<!-- FORMULAIRE -->
+<div class="fw anim-ready" id="form">
+  <div id="fc">
+    <div class="fh">Installer Callify sur votre boutique</div>
+    <div class="fp2">Configuration sur mesure — on s'occupe de tout. Opérationnel en moins de 48h.</div>
+    <div class="fr2">
+      <div class="fl">
+        <label for="fp3">Prénom <span style="color:#E24B4A">*</span></label>
+        <input type="text" id="fp3" placeholder="Thomas" autocomplete="given-name">
+        <span class="field-err" id="err-fp3">Prénom requis</span>
+      </div>
+      <div class="fl">
+        <label for="fn">Nom <span style="color:#E24B4A">*</span></label>
+        <input type="text" id="fn" placeholder="Martin" autocomplete="family-name">
+        <span class="field-err" id="err-fn">Nom requis</span>
+      </div>
+    </div>
+    <div class="fr2">
+      <div class="fl">
+        <label for="fe">Email <span style="color:#E24B4A">*</span></label>
+        <input type="email" id="fe" placeholder="thomas@boutique.com" autocomplete="email" oninput="liveValidateEmail()">
+        <span class="field-err" id="err-fe">Format email invalide</span>
+      </div>
+      <div class="fl">
+        <label for="ft">Téléphone</label>
+        <input type="tel" id="ft" placeholder="+33 6 00 00 00 00" autocomplete="tel" oninput="liveValidateTel()">
+        <span class="field-err" id="err-ft">Format invalide (+33 ou 0X…)</span>
+      </div>
+    </div>
+    <div class="fl" style="margin-bottom:12px">
+      <label for="fsh">URL boutique Shopify</label>
+      <input type="text" id="fsh" placeholder="maboutique.myshopify.com" autocomplete="url">
+    </div>
+    <div class="fl" style="margin-bottom:12px">
+      <label for="fca">CA mensuel estimé</label>
+      <select id="fca">
+        <option value="">Sélectionner...</option>
+        <option>Moins de 10 000 €</option>
+        <option>10 000 – 50 000 €</option>
+        <option>50 000 – 200 000 €</option>
+        <option>Plus de 200 000 €</option>
+      </select>
+    </div>
+    <button class="fb" id="fbtn" onclick="sub()">
+      <span id="fbtn-text">Démarrer mon installation →</span>
+    </button>
+  </div>
+  <div class="fok" id="fok">
+    <div class="fck"><i class="ti ti-check"></i></div>
+    <strong>Demande reçue !</strong>
+    <span>On vous recontacte sous 24h pour configurer votre écosystème.</span>
+  </div>
+</div>
+
+<footer>
+  <span class="ftl">© 2026 Callify — Exclusivement Shopify</span>
+  <div class="ftr"><img src="logo-callify.png" alt=""><span>callify.io</span></div>
+</footer>
+</div>
+
+<script>
+// ========= CANVAS BACKGROUND =========
+const canvas=document.getElementById('c');
+const ctx=canvas.getContext('2d');
+let W,H,pts=[],T=0;
+const mouse={x:-999,y:-999};
+
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=Math.max(document.documentElement.scrollHeight,window.innerHeight);}
+
+class P{
+  constructor(i){this.x=Math.random()*W;this.y=i?Math.random()*H:H+10;this.vx=(Math.random()-.5)*.3;this.vy=-(0.08+Math.random()*.28);this.r=.4+Math.random()*1.8;this.a=.04+Math.random()*.15;this.life=0;this.max=220+Math.random()*520;}
+  tick(){const dx=this.x-mouse.x,dy=this.y-(mouse.y+scrollY);const d=Math.sqrt(dx*dx+dy*dy);if(d<130&&d>0){const f=.45*(1-d/130);this.vx+=dx/d*f*.05;this.vy+=dy/d*f*.05;}this.vx*=.987;this.vy*=.987;this.x+=this.vx;this.y+=this.vy;this.life++;if(this.life>this.max||this.y<-20||this.x<-20||this.x>W+20)Object.assign(this,new P(false));}
+  draw(){const a=this.a*Math.sin((this.life/this.max)*Math.PI);ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=`rgba(150,191,72,${a})`;ctx.fill();}
+}
+
+function drawBg(){T++;const p=0.5+0.5*Math.sin(T*.007);const g1=ctx.createRadialGradient(W*.5,0,0,W*.5,0,W*.75);g1.addColorStop(0,`rgba(28,58,8,${.22+p*.08})`);g1.addColorStop(.4,`rgba(12,28,4,${.14+p*.04})`);g1.addColorStop(1,'rgba(3,3,3,0)');ctx.fillStyle=g1;ctx.fillRect(0,0,W,H);const g2=ctx.createRadialGradient(W*.9,H*.4,0,W*.9,H*.4,W*.5);g2.addColorStop(0,`rgba(50,100,15,${.07+p*.03})`);g2.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);}
+function drawGrid(){const sz=48;ctx.strokeStyle='rgba(150,191,72,0.05)';ctx.lineWidth=.5;for(let x=0;x<=W;x+=sz){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}for(let y=0;y<=H;y+=sz){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}ctx.strokeStyle='rgba(150,191,72,0.11)';ctx.lineWidth=.8;for(let x=0;x<=W;x+=sz*4){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}for(let y=0;y<=H;y+=sz*4){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}ctx.fillStyle='rgba(150,191,72,0.2)';for(let x=0;x<=W;x+=sz*4)for(let y=0;y<=H;y+=sz*4){ctx.beginPath();ctx.arc(x,y,1.3,0,Math.PI*2);ctx.fill();}}
+function drawGlow(){if(mouse.x<0)return;const mg=ctx.createRadialGradient(mouse.x,mouse.y+scrollY,0,mouse.x,mouse.y+scrollY,150);mg.addColorStop(0,'rgba(150,191,72,0.07)');mg.addColorStop(1,'transparent');ctx.fillStyle=mg;ctx.fillRect(0,0,W,H);}
+function loop(){ctx.clearRect(0,0,W,H);drawBg();drawGrid();drawGlow();pts.forEach(p=>{p.tick();p.draw();});requestAnimationFrame(loop);}
+
+document.addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
+window.addEventListener('resize',resize);
+window.addEventListener('scroll',()=>{H=Math.max(H,document.documentElement.scrollHeight);canvas.height=H;});
+resize();pts=Array.from({length:110},()=>new P(true));loop();
+
+// ========= NAV HIDE/SHOW ON SCROLL =========
+const mainNav=document.getElementById('mainNav');
+let lastScrollY=0,navHideTimer=null;
+window.addEventListener('scroll',()=>{
+  const cur=window.scrollY;
+  if(cur>lastScrollY&&cur>120){
+    mainNav.classList.add('hide');
+  } else {
+    mainNav.classList.remove('hide');
+  }
+  lastScrollY=cur;
+},{passive:true});
+
+// ========= MOBILE MENU =========
+const mobMenu=document.getElementById('mobMenu');
+const hamburger=document.getElementById('hamburger');
+let menuOpen=false;
+function toggleMobMenu(){
+  menuOpen=!menuOpen;
+  hamburger.classList.toggle('open',menuOpen);
+  mobMenu.classList.toggle('open',menuOpen);
+  hamburger.setAttribute('aria-expanded',menuOpen);
+  mobMenu.setAttribute('aria-hidden',!menuOpen);
+  document.body.style.overflow=menuOpen?'hidden':'';
+}
+function closeMobMenu(){
+  menuOpen=false;
+  hamburger.classList.remove('open');
+  mobMenu.classList.remove('open');
+  hamburger.setAttribute('aria-expanded','false');
+  mobMenu.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+// Close on outside click
+document.addEventListener('click',e=>{
+  if(menuOpen&&!mobMenu.contains(e.target)&&!hamburger.contains(e.target))closeMobMenu();
+});
+
+// ========= HERO ANIMATIONS — immediate =========
+// Word-split h1
+function splitWords(el){
+  const nodes=[...el.childNodes];
+  el.innerHTML='';
+  nodes.forEach(node=>{
+    if(node.nodeType===3){
+      const words=node.textContent.split(/\s+/).filter(w=>w);
+      words.forEach(word=>{
+        const ww=document.createElement('span');ww.className='w-wrap';
+        const wi=document.createElement('span');wi.className='w-inner';
+        wi.textContent=word;ww.appendChild(wi);el.appendChild(ww);
+        el.appendChild(document.createTextNode(' '));
+      });
+    } else if(node.nodeType===1){
+      if(node.tagName==='BR'){el.appendChild(node.cloneNode());}
+      else if(node.tagName==='EM'){
+        const ww=document.createElement('span');ww.className='w-wrap';
+        const em=node.cloneNode(true);em.classList.add('w-inner');
+        ww.appendChild(em);el.appendChild(ww);
+      }
+    }
+  });
+  el.querySelectorAll('.w-inner').forEach((w,i)=>{w.style.transitionDelay=`${0.08+i*0.07}s`;});
+}
+
+const heroTitle=document.getElementById('heroTitle');
+splitWords(heroTitle);
+setTimeout(()=>{
+  document.getElementById('heroBdg').classList.add('anim-in');
+  setTimeout(()=>heroTitle.classList.add('words-in'),120);
+  setTimeout(()=>document.getElementById('heroMeta').classList.add('anim-in'),380);
+  setTimeout(()=>document.getElementById('heroSub').classList.add('anim-in'),460);
+  setTimeout(()=>document.getElementById('heroCta').classList.add('anim-in'),580);
+},80);
+
+// ========= INTERSECTION OBSERVER FOR SCROLL ANIMATIONS =========
+const ioOpts={threshold:0.12,rootMargin:'0px 0px -40px 0px'};
+const scrollObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('anim-in');
+      scrollObs.unobserve(e.target);
+    }
+  });
+},ioOpts);
+document.querySelectorAll('.anim-ready').forEach(el=>scrollObs.observe(el));
+
+// ========= METRICS COUNTER ANIMATION =========
+let metricsAnimated=false;
+const metsEl=document.getElementById('mets');
+const metObs=new IntersectionObserver((entries)=>{
+  if(entries[0].isIntersecting&&!metricsAnimated){
+    metricsAnimated=true;
+    animCount(document.getElementById('mv1'),0,70,'',1400);
+    animCount(document.getElementById('mv2'),0,87,'~',1600);
+    animCount(document.getElementById('mv3'),0,15,'>',1200);
+    metObs.disconnect();
+  }
+},{threshold:0.4});
+if(metsEl)metObs.observe(metsEl);
+
+function animCount(el,from,to,prefix,dur){
+  if(!el)return;
+  const start=performance.now();
+  const tick=t=>{
+    const p=Math.min((t-start)/dur,1);
+    const e=1-Math.pow(1-p,3);
+    el.textContent=prefix+Math.round(from+(to-from)*e);
+    if(p<1)requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+// ========= DASHBOARD LIVE =========
+const REAL=[["Thomas M.","TM"],["Amélie L.","AL"],["Julien R.","JR"],["Sarah K.","SK"],["Marc D.","MD"],["Léa P.","LP"],["Nicolas B.","NB"],["Camille F.","CF"]];
+const PSEUDO=[["@shadow_fx","SH"],["@n0xvault","NX"],["@kryptek","KR"],["@voidrunner","VR"],["@bl4ckpine","BL"],["@xeltra","XL"]];
+const ST=[["Récupéré","pg"],["En cours","pa"],["2e tentative","pb"],["Non décroché","pr"]];
+const AM=[34.5,89.9,127,52.8,213,78.4,165,42,310,95.5];
+let rows=[],tc=47,tca=1247,lcs=12;
+
+function mkSp(id){const el=document.getElementById(id);if(!el)return;el.innerHTML='';const v=Array.from({length:10},()=>Math.floor(15+Math.random()*85));v[9]=100;v.forEach((h,i)=>{const b=document.createElement('div');b.className='sb'+(i===9?' on':'');b.style.height=h+'%';el.appendChild(b);});}
+function rnd(){const isPseudo=Math.random()<0.3;const[n,av]=isPseudo?PSEUDO[Math.floor(Math.random()*PSEUDO.length)]:REAL[Math.floor(Math.random()*REAL.length)];const[st,cl]=ST[Math.floor(Math.random()*ST.length)];const am=AM[Math.floor(Math.random()*AM.length)];const s=Math.floor(60+Math.random()*180);return{n,av,st,cl,am,dur:`${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`,isPseudo};}
+
+function render(){
+  const b=document.getElementById('tb');if(!b)return;
+  // keep existing rows, only rebuild
+  const existing=[...b.querySelectorAll('.cr')];
+  b.innerHTML='';
+  rows.slice(0,5).forEach((r,i)=>{
+    const d=document.createElement('div');
+    d.className='cr'+(i===0?' nw':'');
+    d.innerHTML=`<div class="cn${r.isPseudo?' ps':''}"><div class="av">${r.av}</div>${r.n}</div><div class="ca2">${r.am.toFixed(2)} €</div><div class="cd2">${r.dur}</div><span class="pill ${r.cl}">${r.st}</span>`;
+    b.appendChild(d);
+  });
+}
+
+function upd(){
+  const g=id=>document.getElementById(id);
+  if(g('ct'))g('ct').innerHTML=`<span>${tc}</span>`;
+  if(g('ca'))g('ca').innerHTML=`<span>${tca.toLocaleString('fr-FR')}</span> €`;
+  ['sp1','sp2'].forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    el.querySelectorAll('.sb').forEach((b,i,a)=>{
+      b.style.height=(i===a.length-1?100:Math.floor(15+Math.random()*85))+'%';
+      b.className='sb'+(i===a.length-1?' on':'');
+    });
+  });
+}
+
+function add(){
+  const r=rnd();rows.unshift(r);if(rows.length>8)rows.pop();
+  tc++;
+  if(r.cl==='pg')tca+=Math.round(r.am);
+  const ac=document.getElementById('ac');
+  if(ac)ac.textContent=Math.floor(2+Math.random()*4);
+  render();upd();
+  H=Math.max(H,document.documentElement.scrollHeight);canvas.height=H;
+}
+
+setInterval(()=>{lcs++;const el=document.getElementById('lc');if(el)el.textContent=lcs<60?`il y a ${lcs}s`:`il y a ${Math.floor(lcs/60)}min`;},1000);
+
+// ========= BARRES COMPARATIF =========
+const barObs=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){
+    setTimeout(()=>{
+      const b1=document.getElementById('bar1'),b2=document.getElementById('bar2'),b3=document.getElementById('bar3');
+      if(b1)b1.style.width='8%';if(b2)b2.style.width='13%';if(b3)b3.style.width='18%';
+    },300);
+    barObs.disconnect();
+  }
+},{threshold:0.3});
+const barSection=document.querySelector('.chan-grid');
+if(barSection)barObs.observe(barSection);
+
+// ========= STEPS LINE ANIMATION =========
+const stepsObs=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){
+    ['sf1','sf2','sf3'].forEach((id,i)=>setTimeout(()=>{const e=document.getElementById(id);if(e)e.style.width='100%';},i*600));
+    stepsObs.disconnect();
+  }
+},{threshold:0.3});
+const stepsEl=document.querySelector('.steps');
+if(stepsEl)stepsObs.observe(stepsEl);
+
+// ========= ROI CALCULATOR =========
+let roiFlashTimers={};
+function flashROI(id){
+  const el=document.getElementById(id);if(!el)return;
+  el.classList.remove('flash');
+  void el.offsetWidth;
+  el.classList.add('flash');
+}
+
+function calcROI(){
+  const ca=parseInt(document.getElementById('ca-slider').value);
+  const pm=parseInt(document.getElementById('pm-slider').value);
+  document.getElementById('ca-label').textContent=ca.toLocaleString('fr-FR')+' €';
+  document.getElementById('pm-label').textContent=pm+' €';
+  const paniersCrees=Math.round(ca/pm);
+  const abandonnes=Math.round(paniersCrees*0.70);
+  const t1=Math.round(abandonnes*0.50);
+  const t2=Math.round((abandonnes-t1)*0.50);
+  const t3=Math.round((abandonnes-t1-t2)*0.50);
+  const totalContacts=t1+t2+t3;
+  const tauxContact=Math.round((totalContacts/abandonnes)*100);
+  const mensuel=Math.round(totalContacts*0.20*pm);
+  const annuel=mensuel*12;
+
+  function setRV(id,val){const el=document.getElementById(id);if(!el)return;if(el.textContent!==val){el.textContent=val;flashROI(id);}}
+  setRV('r-paniers',abandonnes.toLocaleString('fr-FR'));
+  document.getElementById('r-sub1').textContent=`sur ~${paniersCrees.toLocaleString('fr-FR')} paniers créés`;
+  setRV('r-contacts',totalContacts.toLocaleString('fr-FR'));
+  setRV('r-mensuel',mensuel.toLocaleString('fr-FR')+' €');
+  setRV('r-annuel',annuel.toLocaleString('fr-FR')+' €');
+  document.getElementById('tb4').style.width=tauxContact+'%';
+  document.getElementById('tv4').textContent=tauxContact+'%';
+}
+
+// ========= WAVEFORM DEMO =========
+const wf=document.getElementById('waveform');
+const BARS=44;
+const baseH=Array.from({length:BARS},()=>8+Math.random()*20);
+for(let i=0;i<BARS;i++){
+  const b=document.createElement('div');b.className='wave-bar';
+  b.style.height=baseH[i]+'px';b.style.flex='1';wf.appendChild(b);
+}
+let playing=false,waveInterval=null,playPos=0,wavePhase=0;
+
+function togglePlay(){
+  playing=!playing;
+  const icon=document.getElementById('play-icon');
+  const label=document.getElementById('play-label');
+  const status=document.getElementById('call-status');
+  if(playing){
+    icon.className='ti ti-player-pause';label.textContent='Pause';
+    status.innerHTML='<span class="pls"></span>Appel en cours — 0:00';
+    waveInterval=setInterval(()=>{
+      playPos++;wavePhase+=0.18;
+      const m=Math.floor(playPos/60),s=playPos%60;
+      status.innerHTML=`<span class="pls"></span>Appel en cours — ${m}:${s.toString().padStart(2,'0')}`;
+      const bars=wf.querySelectorAll('.wave-bar');
+      // Organic wave: sine envelope + noise
+      bars.forEach((b,i)=>{
+        const envelope=1+0.7*Math.sin(wavePhase+i*0.22);
+        const noise=(Math.random()-0.5)*8;
+        const h=Math.max(4,Math.min(40,baseH[i]*envelope+noise));
+        b.style.height=h+'px';
+        const active=Math.abs(Math.sin(wavePhase*0.5+i*0.15))>0.5;
+        b.classList.toggle('active',active);
+      });
+    },70);
+  } else {
+    icon.className='ti ti-player-play';label.textContent="Simuler l'appel";
+    status.innerHTML='<span>⏸</span> En pause';
+    clearInterval(waveInterval);
+    const bars=wf.querySelectorAll('.wave-bar');
+    bars.forEach((b,i)=>{b.classList.remove('active');b.style.height=baseH[i]+'px';});
+  }
+}
+
+// ========= FORM VALIDATION =========
+const WEBHOOK_URL='YOUR_N8N_WEBHOOK_URL';
+
+function validateEmail(v){return/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());}
+function validateTel(v){
+  if(!v.trim())return true; // optional
+  const c=v.replace(/[\s\-\.]/g,'');
+  return/^(\+33|0)[0-9]{9}$/.test(c)||/^\+[1-9][0-9]{6,14}$/.test(c);
+}
+
+function liveValidateEmail(){
+  const v=document.getElementById('fe').value;
+  const err=document.getElementById('err-fe');
+  const inp=document.getElementById('fe');
+  if(v&&!validateEmail(v)){inp.classList.add('err');inp.classList.remove('ok');err.classList.add('show');}
+  else if(validateEmail(v)){inp.classList.remove('err');inp.classList.add('ok');err.classList.remove('show');}
+  else{inp.classList.remove('err','ok');err.classList.remove('show');}
+}
+
+function liveValidateTel(){
+  const v=document.getElementById('ft').value;
+  const err=document.getElementById('err-ft');
+  const inp=document.getElementById('ft');
+  if(v&&!validateTel(v)){inp.classList.add('err');err.classList.add('show');}
+  else{inp.classList.remove('err');err.classList.remove('show');}
+}
+
+function sub(){
+  const btn=document.getElementById('fbtn');
+  const p=document.getElementById('fp3').value.trim();
+  const n=document.getElementById('fn').value.trim();
+  const e=document.getElementById('fe').value.trim();
+  const t=document.getElementById('ft').value.trim();
+
+  let valid=true;
+
+  // Validate prénom
+  const errP=document.getElementById('err-fp3');
+  if(!p){document.getElementById('fp3').classList.add('err');errP.classList.add('show');valid=false;}
+  else{document.getElementById('fp3').classList.remove('err');document.getElementById('fp3').classList.add('ok');errP.classList.remove('show');}
+
+  // Validate nom
+  const errN=document.getElementById('err-fn');
+  if(!n){document.getElementById('fn').classList.add('err');errN.classList.add('show');valid=false;}
+  else{document.getElementById('fn').classList.remove('err');document.getElementById('fn').classList.add('ok');errN.classList.remove('show');}
+
+  // Validate email
+  const errE=document.getElementById('err-fe');
+  if(!e||!validateEmail(e)){document.getElementById('fe').classList.add('err');document.getElementById('fe').classList.remove('ok');errE.classList.add('show');valid=false;}
+  else{document.getElementById('fe').classList.remove('err');document.getElementById('fe').classList.add('ok');errE.classList.remove('show');}
+
+  // Validate tel (optional but format check)
+  if(t&&!validateTel(t)){
+    document.getElementById('ft').classList.add('err');document.getElementById('err-ft').classList.add('show');valid=false;
+  } else {
+    document.getElementById('ft').classList.remove('err');document.getElementById('err-ft').classList.remove('show');
+  }
+
+  if(!valid)return;
+
+  btn.disabled=true;
+  document.getElementById('fbtn-text').innerHTML='<i class="ti ti-loader-2 fb-spinner"></i> Envoi en cours...';
+
+  fetch(WEBHOOK_URL,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      prenom:p,nom:n,email:e,tel:t,
+      shop:document.getElementById('fsh').value,
+      ca:document.getElementById('fca').value,
+      date:new Date().toISOString()
+    })
+  }).catch(()=>{}).finally(()=>{
+    document.getElementById('fc').style.display='none';
+    document.getElementById('fok').style.display='block';
+    launchConfetti();
+  });
+}
+
+function launchConfetti(){
+  const container=document.getElementById('fok');
+  const colors=['#96BF48','#b8e05a','#6aaa2e','#c4e870','rgba(255,255,255,0.7)'];
+  for(let i=0;i<28;i++){
+    const p=document.createElement('div');
+    const size=4+Math.random()*7;
+    const color=colors[Math.floor(Math.random()*colors.length)];
+    const angle=Math.random()*Math.PI*2;
+    const dist=50+Math.random()*110;
+    const dx=Math.cos(angle)*dist+'px';
+    const dy=Math.sin(angle)*dist-30+'px';
+    const rot=(Math.random()*360)+'deg';
+    p.style.cssText=`position:absolute;width:${size}px;height:${size}px;background:${color};border-radius:${Math.random()>.5?'50%':'3px'};top:50%;left:50%;pointer-events:none;--dx:${dx};--dy:${dy};--rot:${rot};animation:confettiFall ${700+Math.random()*500}ms cubic-bezier(0,.9,.57,1) ${i*25}ms forwards`;
+    container.appendChild(p);
+    setTimeout(()=>p.remove(),1800);
+  }
+}
+
+// ========= INIT =========
+for(let i=0;i<5;i++)rows.push(rnd());
+mkSp('sp1');mkSp('sp2');render();upd();
+setTimeout(calcROI,200);
+setInterval(add,3500);
+</script>
+</body>
+</html>
