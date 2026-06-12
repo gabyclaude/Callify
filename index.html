@@ -352,6 +352,63 @@ footer{border-top:1px solid rgba(150,191,72,0.07);padding:20px 32px;display:flex
 .ftr img{width:16px;height:16px;object-fit:contain;filter:drop-shadow(0 0 4px rgba(150,191,72,0.4));opacity:.7}
 .ftr span{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--g)}
 
+/* ========= SOCIAL PROOF BAR ========= */
+.sp-bar{display:flex;align-items:center;justify-content:center;padding:16px 32px;background:rgba(6,6,6,0.85);border-bottom:1px solid rgba(255,255,255,0.04);overflow-x:auto;gap:0}
+.sp-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:0 36px;flex-shrink:0}
+.sp-num{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;background:linear-gradient(135deg,#c4e870,#96BF48);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.5px;line-height:1}
+.sp-lbl{font-size:10px;color:var(--mx);font-family:var(--mono);letter-spacing:.4px;white-space:nowrap}
+.sp-div{width:1px;height:32px;background:rgba(255,255,255,0.07);flex-shrink:0}
+
+/* ========= TESTIMONIALS ========= */
+.testi-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.testi-card{background:rgba(10,10,10,0.75);border:1px solid rgba(150,191,72,0.1);border-radius:16px;padding:28px;position:relative;overflow:hidden;transition:all .3s;backdrop-filter:blur(20px)}
+.testi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,rgba(150,191,72,0.5),transparent)}
+.testi-card::after{content:'\201C';position:absolute;top:8px;right:18px;font-size:88px;line-height:1;color:rgba(150,191,72,0.05);font-family:'Space Grotesk',sans-serif;font-weight:700;pointer-events:none}
+.testi-card:hover{border-color:rgba(150,191,72,0.22);transform:translateY(-4px);box-shadow:0 20px 54px rgba(0,0,0,0.4),0 0 30px rgba(150,191,72,0.04)}
+.testi-header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.testi-avatar{width:42px;height:42px;border-radius:10px;background:rgba(150,191,72,0.08);border:1px solid rgba(150,191,72,0.2);display:grid;place-items:center;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--g);flex-shrink:0}
+.testi-name{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#fff;margin-bottom:2px}
+.testi-role{font-size:10px;color:var(--mx);font-family:var(--mono)}
+.testi-result{margin-left:auto;font-family:var(--mono);font-size:22px;font-weight:700;background:linear-gradient(135deg,#c4e870,#96BF48);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-1px;white-space:nowrap}
+.testi-quote{font-size:13px;color:var(--mx);line-height:1.8;font-weight:300;margin-bottom:16px}
+.testi-quote b{color:#fff;font-weight:500}
+.testi-foot{display:flex;flex-wrap:wrap;gap:6px}
+.testi-tag{font-size:9px;font-family:var(--mono);color:var(--g);background:rgba(150,191,72,0.07);border:1px solid rgba(150,191,72,0.14);padding:2px 8px;border-radius:3px;font-weight:600}
+
+/* ========= FAQ ========= */
+.faq-list{max-width:720px;display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.faq-item{background:rgba(10,10,10,0.7);border:1px solid rgba(255,255,255,0.07);border-radius:12px;overflow:hidden;cursor:pointer;transition:border-color .25s,background .2s}
+.faq-item:hover{border-color:rgba(150,191,72,0.2);background:rgba(14,14,14,0.7)}
+.faq-item.open{border-color:rgba(150,191,72,0.28);background:rgba(10,14,10,0.8)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:17px 20px;gap:12px;user-select:none}
+.faq-q span{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:#fff;line-height:1.45}
+.faq-icon{font-size:15px;color:var(--mx);transition:transform .3s cubic-bezier(.16,1,.3,1),color .2s;flex-shrink:0}
+.faq-item.open .faq-icon{transform:rotate(180deg);color:var(--g)}
+.faq-a{font-size:12.5px;color:var(--mx);line-height:1.8;font-weight:300;padding:0 20px 18px;max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.16,1,.3,1)}
+.faq-item.open .faq-a{max-height:300px}
+
+/* ========= NAV ENHANCEMENTS ========= */
+.nav-shopify-pill{display:flex;align-items:center;gap:5px;font-size:10px;font-family:'Space Grotesk',sans-serif;font-weight:700;color:rgba(150,191,72,0.65);background:rgba(150,191,72,0.06);border:1px solid rgba(150,191,72,0.14);padding:4px 11px;border-radius:6px;letter-spacing:.3px;white-space:nowrap;flex-shrink:0}
+
+/* ========= SECTION TITLE ACCENT ========= */
+.stit::after{content:'';display:block;width:28px;height:2px;background:linear-gradient(90deg,var(--g),transparent);border-radius:2px;margin-top:7px}
+
+/* ========= FORM SHOPIFY BADGE ========= */
+.form-shopify-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(150,191,72,0.06);border:1px solid rgba(150,191,72,0.16);color:rgba(150,191,72,.7);font-size:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;padding:5px 12px;border-radius:6px;margin-bottom:18px;letter-spacing:.3px}
+
+/* ========= FOOTER REDESIGN ========= */
+footer{border-top:1px solid rgba(150,191,72,0.07);padding:28px 32px;display:grid;grid-template-columns:1fr auto 1fr;align-items:start;background:rgba(5,5,5,0.97);gap:24px}
+.ft-logo{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.ft-logo-t{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#fff}
+.ft-mid{display:flex;justify-content:center}
+.ft-links{display:flex;flex-direction:column;gap:7px;text-align:center}
+.ft-link{font-size:11px;color:var(--mx);text-decoration:none;font-family:'DM Sans',sans-serif;transition:color .15s}
+.ft-link:hover{color:var(--g)}
+.ft-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.ft-badges{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+.ft-badge{font-size:9px;font-family:var(--mono);color:rgba(150,191,72,.45);background:rgba(150,191,72,0.05);border:1px solid rgba(150,191,72,0.1);padding:2px 7px;border-radius:3px;letter-spacing:.4px}
+.ft-shopify-line{display:flex;align-items:center;gap:4px;color:rgba(150,191,72,.35);font-size:9px;font-family:var(--mono);letter-spacing:.5px;margin-top:3px}
+
 /* ========= RESPONSIVE 768px ========= */
 @media(max-width:768px){
   :root{--nav-h:53px}
@@ -380,9 +437,18 @@ footer{border-top:1px solid rgba(150,191,72,0.07);padding:20px 32px;display:flex
   .demo-inner{grid-template-columns:1fr;padding:16px 18px 20px}
   .fw{margin:20px 16px 36px;padding:22px 18px}
   .fr2{grid-template-columns:1fr}
-  footer{padding:16px 20px}
   .stit{font-size:22px}
   .vs-wrap{overflow-x:auto}
+  .nav-shopify-pill{display:none}
+  .sp-bar{justify-content:flex-start;padding:12px 16px}
+  .sp-item{padding:0 14px}
+  .sp-num{font-size:18px}
+  .testi-grid{grid-template-columns:1fr}
+  footer{grid-template-columns:1fr;gap:20px;padding:22px 20px}
+  .ft-mid{justify-content:flex-start}
+  .ft-links{flex-direction:row;flex-wrap:wrap;text-align:left;gap:7px 16px}
+  .ft-right{align-items:flex-start}
+  .ft-badges{justify-content:flex-start}
 }
 @media(max-width:480px){
   h1{font-size:30px;letter-spacing:-1px}
@@ -391,6 +457,14 @@ footer{border-top:1px solid rgba(150,191,72,0.07);padding:20px 32px;display:flex
 </style>
 </head>
 <body>
+
+<!-- SHOPIFY ICON SYMBOL — reused via <use href="#ico-shopify"> -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="ico-shopify" viewBox="0 0 24 28">
+    <path d="M16.4 5.7c0 0-.5.1-.9.2C15.2 4.7 14.3 4 13.2 4c-.8 0-1.5.4-1.9 1.1-.2 0-.4-.1-.6-.1-1.1 0-2 .9-2.1 2L7 22.5l13.5 2.5L24 9l-2.8-.4C20.7 7.5 19.3 6.7 16.4 5.7z" fill="currentColor" fill-opacity=".2" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M21.8 8.3C20.8 6.2 19.3 5.5 17.5 6" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" fill="none"/>
+  </symbol>
+</svg>
 
 <canvas id="c"></canvas>
 <div class="page">
@@ -416,6 +490,7 @@ footer{border-top:1px solid rgba(150,191,72,0.07);padding:20px 32px;display:flex
     <a href="#roi">ROI</a>
     <a href="#demo">Écouter un appel</a>
   </div>
+  <div class="nav-shopify-pill"><svg width="11" height="13" style="color:#96BF48"><use href="#ico-shopify"/></svg>Shopify Exclusif</div>
   <button class="ncta" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">Démarrer →</button>
   <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" onclick="toggleMobMenu()">
     <span></span><span></span><span></span>
@@ -424,9 +499,7 @@ footer{border-top:1px solid rgba(150,191,72,0.07);padding:20px 32px;display:flex
 
 <!-- BARRE SHOPIFY -->
 <div class="shopify-bar">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M15.5 4.5C15.5 4.5 15.1 4.5 14.7 4.6C14.4 3.6 13.5 3 12.5 3C11.6 3 10.9 3.5 10.5 4.2C10.3 4.2 10.1 4.1 9.9 4.1C8.7 4.1 7.8 5 7.7 6.1L6 19.5L17 21L21 6L18.1 5.6C17.7 4.9 16.7 4.5 15.5 4.5Z" fill="#96BF48" fill-opacity="0.3" stroke="#96BF48" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
+  <svg width="18" height="21" style="color:#96BF48"><use href="#ico-shopify"/></svg>
   <span>Callify est <b>exclusivement conçu pour Shopify</b></span>
   <div class="shopify-sep"></div>
   <span>Compatible uniquement avec les boutiques Shopify</span>
@@ -437,7 +510,7 @@ footer{border-top:1px solid rgba(150,191,72,0.07);padding:20px 32px;display:flex
 <!-- HERO -->
 <div class="hero">
   <div class="hero-scan"></div>
-  <div class="bdg" id="heroBdg"><span class="pls"></span>Shopify exclusif · 3 tentatives · 100% des paniers</div>
+  <div class="bdg" id="heroBdg"><svg width="12" height="14" style="color:#96BF48;margin-right:1px;opacity:.9"><use href="#ico-shopify"/></svg><span class="pls"></span>Shopify exclusif · 3 tentatives · 100% des paniers</div>
   <h1 id="heroTitle">Vos paniers abandonnés<br>relancés <em>automatiquement</em></h1>
   <div class="hmeta" id="heroMeta">
     <div class="hmi">v2.4.1 · <b>stable</b></div><div class="hmi-sep"></div>
@@ -452,11 +525,22 @@ footer{border-top:1px solid rgba(150,191,72,0.07);padding:20px 32px;display:flex
   </div>
 </div>
 
+<!-- SOCIAL PROOF BAR -->
+<div class="sp-bar">
+  <div class="sp-item"><span class="sp-num">42+</span><span class="sp-lbl">boutiques actives</span></div>
+  <div class="sp-div"></div>
+  <div class="sp-item"><span class="sp-num">1.2M€</span><span class="sp-lbl">CA récupéré</span></div>
+  <div class="sp-div"></div>
+  <div class="sp-item"><span class="sp-num">&lt;48h</span><span class="sp-lbl">d'installation</span></div>
+  <div class="sp-div"></div>
+  <div class="sp-item"><span class="sp-num">RGPD</span><span class="sp-lbl">conforme · EU</span></div>
+</div>
+
 <!-- STATUS BAR -->
 <div class="sbar">
   <div class="sbi"><div class="sdot" style="background:#96BF48;box-shadow:0 0 6px rgba(150,191,72,.8)"></div>Système <b>opérationnel</b></div>
   <div class="sbi"><div class="sdot" style="background:#96BF48;animation:pls 1.5s infinite"></div>Appels actifs <b id="ac">3</b></div>
-  <div class="sbi"><div class="sdot" style="background:#96bf48"></div>Shopify <b>connecté</b></div>
+  <div class="sbi"><svg width="11" height="13" style="color:#96BF48;flex-shrink:0"><use href="#ico-shopify"/></svg>Shopify <b>connecté</b></div>
   <div class="sbi"><div class="sdot" style="background:#96BF48"></div>Dernier appel <b id="lc">il y a 12s</b></div>
 </div>
 
@@ -472,6 +556,7 @@ footer{border-top:1px solid rgba(150,191,72,0.07);padding:20px 32px;display:flex
   <div class="db">
     <div class="wd" style="background:#ff5f56"></div><div class="wd" style="background:#ffbd2e"></div><div class="wd" style="background:#27c93f"></div>
     <span class="dtl">callify_dashboard — live_feed.json</span>
+    <span style="display:flex;align-items:center;gap:4px;font-size:9px;font-family:var(--mono);color:rgba(150,191,72,.5);margin-right:4px"><svg width="9" height="11" style="color:rgba(150,191,72,.6)"><use href="#ico-shopify"/></svg>Shopify sync</span>
     <span class="lv"><span class="ld"></span>EN DIRECT</span>
   </div>
   <div class="dbi">
@@ -494,7 +579,7 @@ footer{border-top:1px solid rgba(150,191,72,0.07);padding:20px 32px;display:flex
   <div class="stit anim-ready" style="transition-delay:.08s">Trois étapes, zéro intervention</div>
   <div class="ssub anim-ready" style="transition-delay:.14s">Callify se connecte à votre boutique Shopify en quelques minutes et prend en charge tout le processus de relance.</div>
   <div class="steps">
-    <div class="step anim-ready"><div class="sl"><div class="slf" id="sf1"></div></div><div class="sn">01 —</div><div class="si2"><i class="ti ti-plug"></i></div><h3>Connexion Shopify</h3><p>Dès qu'un panier est abandonné, Callify vérifie en temps réel que la commande n'a pas été passée — puis déclenche la séquence d'appels.</p></div>
+    <div class="step anim-ready"><div class="sl"><div class="slf" id="sf1"></div></div><div class="sn">01 —</div><div class="si2"><svg width="20" height="23" style="color:#96BF48"><use href="#ico-shopify"/></svg></div><h3>Connexion Shopify</h3><p>Dès qu'un panier est abandonné, Callify vérifie en temps réel que la commande n'a pas été passée — puis déclenche la séquence d'appels.</p></div>
     <div class="step anim-ready" style="transition-delay:.12s"><div class="sl"><div class="slf" id="sf2"></div></div><div class="sn">02 —</div><div class="si2"><i class="ti ti-phone-call"></i></div><h3>Jusqu'à 3 appels</h3><p>Callify appelle avec le prénom du client et le détail exact de son panier. Si pas de réponse, il rappelle — jusqu'à 3 fois, espacées intelligemment.</p></div>
     <div class="step anim-ready" style="transition-delay:.22s"><div class="sl"><div class="slf" id="sf3"></div></div><div class="sn">03 —</div><div class="si2"><i class="ti ti-chart-bar"></i></div><h3>Suivi temps réel</h3><p>Chaque appel tracé : décroché, durée, résultat, CA récupéré. Statuts mis à jour automatiquement dans votre tableau de bord.</p></div>
   </div>
@@ -587,6 +672,40 @@ footer{border-top:1px solid rgba(150,191,72,0.07);padding:20px 32px;display:flex
   </div>
 </div>
 
+<!-- TÉMOIGNAGES -->
+<div class="sec" id="testi" style="padding-top:28px">
+  <div class="stag anim-ready">Résultats réels</div>
+  <div class="stit anim-ready" style="transition-delay:.08s">Ce que disent les marchands</div>
+  <div class="testi-grid" style="margin-top:28px">
+    <div class="testi-card anim-ready">
+      <div class="testi-header">
+        <div class="testi-avatar">JM</div>
+        <div><div class="testi-name">Juliette M.</div><div class="testi-role">Fondatrice · Lingerie Paris</div></div>
+        <div class="testi-result">+18%</div>
+      </div>
+      <div class="testi-quote">"Callify a récupéré <b>18% de nos paniers abandonnés</b> dès le premier mois. La voix correspond parfaitement à notre identité de marque — nos clientes ne se doutent de rien."</div>
+      <div class="testi-foot">
+        <span class="testi-tag"><svg width="8" height="9" style="color:#96BF48;vertical-align:middle"><use href="#ico-shopify"/></svg> Shopify Plus</span>
+        <span class="testi-tag">127€ panier moyen</span>
+        <span class="testi-tag">3 semaines de déploiement</span>
+      </div>
+    </div>
+    <div class="testi-card anim-ready" style="transition-delay:.12s">
+      <div class="testi-header">
+        <div class="testi-avatar">AB</div>
+        <div><div class="testi-name">Alexandre B.</div><div class="testi-role">Co-fondateur · Sportswear premium</div></div>
+        <div class="testi-result">342€</div>
+      </div>
+      <div class="testi-quote">"342€ récupérés <b>la première semaine</b> d'utilisation. Le setup était terminé en 48h, ROI immédiat. Le script capture exactement le ton premium de notre boutique."</div>
+      <div class="testi-foot">
+        <span class="testi-tag"><svg width="8" height="9" style="color:#96BF48;vertical-align:middle"><use href="#ico-shopify"/></svg> Shopify Advanced</span>
+        <span class="testi-tag">213€ panier moyen</span>
+        <span class="testi-tag">ROI semaine 1</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ROI -->
 <div class="roi-wrap anim-ready" id="roi">
   <div class="roi-grid">
@@ -642,9 +761,38 @@ footer{border-top:1px solid rgba(150,191,72,0.07);padding:20px 32px;display:flex
   </div>
 </div>
 
+<!-- FAQ -->
+<div class="sec" style="padding-bottom:8px">
+  <div class="stag anim-ready">FAQ</div>
+  <div class="stit anim-ready" style="transition-delay:.08s">Questions fréquentes</div>
+  <div class="faq-list" style="margin-top:24px">
+    <div class="faq-item anim-ready" onclick="toggleFaq(this)">
+      <div class="faq-q"><span>Callify fonctionne-t-il avec toutes les boutiques Shopify ?</span><i class="ti ti-chevron-down faq-icon"></i></div>
+      <div class="faq-a">Oui — Callify est conçu exclusivement pour Shopify et se connecte nativement via l'API Shopify. Aucune intégration tierce, aucun code à installer manuellement. Compatible avec toutes les offres Shopify (Basic, Shopify, Advanced, Plus).</div>
+    </div>
+    <div class="faq-item anim-ready" style="transition-delay:.06s" onclick="toggleFaq(this)">
+      <div class="faq-q"><span>Que se passe-t-il si le client ne décroche pas ?</span><i class="ti ti-chevron-down faq-icon"></i></div>
+      <div class="faq-a">Callify effectue jusqu'à 3 tentatives espacées intelligemment (ex. T1 après 30 min, T2 après 3h, T3 le lendemain). Sans réponse sur les 3 appels, le panier est marqué "non joignable" et tracé dans votre tableau de bord. Aucun harcèlement, aucun appel hors plages légales.</div>
+    </div>
+    <div class="faq-item anim-ready" style="transition-delay:.1s" onclick="toggleFaq(this)">
+      <div class="faq-q"><span>Comment est configuré le script et la voix ?</span><i class="ti ti-chevron-down faq-icon"></i></div>
+      <div class="faq-a">Chaque déploiement est personnalisé par notre équipe : ton, vocabulaire, voix (genre, accent, chaleur), script, gestion des objections et offres conditionnelles (livraison gratuite, remise, urgence…). Vous validez le script avant la mise en production. C'est ce qui nous différencie d'un outil générique.</div>
+    </div>
+    <div class="faq-item anim-ready" style="transition-delay:.14s" onclick="toggleFaq(this)">
+      <div class="faq-q"><span>Les appels sont-ils conformes au RGPD ?</span><i class="ti ti-chevron-down faq-icon"></i></div>
+      <div class="faq-a">Oui. Callify n'appelle que les clients qui ont un panier actif et dont les données sont déjà dans votre Shopify — données que vous avez légalement collectées. Les appels sont traités sur des serveurs EU, les enregistrements peuvent être désactivés, et nous respectons les plages horaires légales de démarchage téléphonique.</div>
+    </div>
+    <div class="faq-item anim-ready" style="transition-delay:.18s" onclick="toggleFaq(this)">
+      <div class="faq-q"><span>Combien de temps prend l'installation ?</span><i class="ti ti-chevron-down faq-icon"></i></div>
+      <div class="faq-a">Moins de 48h entre votre demande et les premiers appels actifs. Étapes : appel de brief (30 min) → rédaction et validation du script (24h) → connexion Shopify et tests (quelques heures) → go live. Tout est géré par notre équipe — vous n'avez rien à toucher techniquement.</div>
+    </div>
+  </div>
+</div>
+
 <!-- FORMULAIRE -->
 <div class="fw anim-ready" id="form">
   <div id="fc">
+    <div class="form-shopify-badge"><svg width="12" height="14" style="color:#96BF48"><use href="#ico-shopify"/></svg>Compatible Shopify natif — aucune intégration tierce</div>
     <div class="fh">Installer Callify sur votre boutique</div>
     <div class="fp2">Configuration sur mesure — on s'occupe de tout. Opérationnel en moins de 48h.</div>
     <div class="fr2">
@@ -672,7 +820,7 @@ footer{border-top:1px solid rgba(150,191,72,0.07);padding:20px 32px;display:flex
       </div>
     </div>
     <div class="fl" style="margin-bottom:12px">
-      <label for="fsh">URL boutique Shopify</label>
+      <label for="fsh" style="display:flex;align-items:center;gap:5px"><svg width="10" height="12" style="color:#96BF48"><use href="#ico-shopify"/></svg>URL boutique Shopify</label>
       <input type="text" id="fsh" placeholder="maboutique.myshopify.com" autocomplete="url">
     </div>
     <div class="fl" style="margin-bottom:12px">
@@ -697,8 +845,31 @@ footer{border-top:1px solid rgba(150,191,72,0.07);padding:20px 32px;display:flex
 </div>
 
 <footer>
-  <span class="ftl">© 2026 Callify — Exclusivement Shopify</span>
-  <div class="ftr"><img src="logo-callify.png" alt=""><span>callify.io</span></div>
+  <div>
+    <div class="ft-logo">
+      <img src="logo-callify.png" alt="Callify" style="width:20px;height:20px;filter:drop-shadow(0 0 6px rgba(150,191,72,.5))">
+      <span class="ft-logo-t">Callify</span>
+    </div>
+    <div class="ftl">Relance automatisée de paniers abandonnés</div>
+    <div class="ft-shopify-line"><svg width="9" height="11" style="color:rgba(150,191,72,.4)"><use href="#ico-shopify"/></svg>Exclusivement Shopify</div>
+  </div>
+  <div class="ft-mid">
+    <div class="ft-links">
+      <a href="#comment" class="ft-link">Comment ça marche</a>
+      <a href="#vs" class="ft-link">vs WhatsApp</a>
+      <a href="#roi" class="ft-link">ROI</a>
+      <a href="#demo" class="ft-link">Démo</a>
+      <a href="#form" class="ft-link">Démarrer</a>
+    </div>
+  </div>
+  <div class="ft-right">
+    <div class="ftl">© 2026 Callify</div>
+    <div class="ft-badges">
+      <span class="ft-badge">RGPD</span>
+      <span class="ft-badge">EU Servers</span>
+      <span class="ft-badge">Shopify Native</span>
+    </div>
+  </div>
 </footer>
 </div>
 
@@ -1081,6 +1252,13 @@ function launchConfetti(){
     container.appendChild(p);
     setTimeout(()=>p.remove(),1800);
   }
+}
+
+// ========= FAQ =========
+function toggleFaq(el){
+  const isOpen=el.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!isOpen)el.classList.add('open');
 }
 
 // ========= INIT =========
