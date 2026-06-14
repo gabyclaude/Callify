@@ -40,6 +40,8 @@
 @keyframes haloPulse{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:.85;transform:scale(1.06)}}
 @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 @keyframes beadRun{0%{offset-distance:0%}100%{offset-distance:100%}}
+@keyframes ctaGlow{0%,100%{box-shadow:0 6px 30px rgba(150,191,72,0.34)}50%{box-shadow:0 6px 48px rgba(150,191,72,0.58),0 0 90px -10px rgba(150,191,72,0.18)}}
+@keyframes sdotRipple{0%{transform:scale(1);opacity:.6}100%{transform:scale(3);opacity:0}}
 
 /* ============ RESET / TOKENS ============ */
 *{box-sizing:border-box;margin:0;padding:0}
@@ -61,6 +63,8 @@ html,body{background:var(--bg);color:var(--tx);font-family:'DM Sans',sans-serif;
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:
   radial-gradient(900px 520px at 50% -8%,rgba(150,191,72,0.10),transparent 60%),
   radial-gradient(700px 500px at 100% 12%,rgba(90,140,40,0.06),transparent 55%);}
+body::after{content:'';position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.026;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
+#pgbar{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,#96BF48,#c4e870,#96BF48);z-index:9999;pointer-events:none;transition:width .08s linear;border-radius:0 2px 2px 0}
 canvas#c{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .page{position:relative;z-index:1}
 .wrap{width:min(var(--mw),calc(100% - var(--pad)*2));margin-inline:auto}
@@ -118,7 +122,7 @@ h1.words-in .w-inner{transform:translateY(0);opacity:1}
 .sub.anim-in{opacity:1;transform:translateY(0)}
 .cta-row{display:flex;gap:13px;justify-content:center;flex-wrap:wrap;opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease .7s;will-change:opacity,transform}
 .cta-row.anim-in{opacity:1;transform:translateY(0)}
-.btng{background:linear-gradient(135deg,#bce06a,#96BF48,#7aad2e);color:#04130a;font-family:var(--disp);font-size:13.5px;font-weight:700;padding:14px 30px;border-radius:12px;border:none;cursor:pointer;transition:all .2s;box-shadow:0 6px 30px rgba(150,191,72,0.34);position:relative;overflow:hidden}
+.btng{background:linear-gradient(135deg,#bce06a,#96BF48,#7aad2e);color:#04130a;font-family:var(--disp);font-size:13.5px;font-weight:700;padding:14px 30px;border-radius:12px;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 6px 30px rgba(150,191,72,0.34);position:relative;overflow:hidden;animation:ctaGlow 3.5s ease-in-out infinite}
 .btng::after{content:'';position:absolute;top:0;left:-80%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.32),transparent);transform:skewX(-15deg);pointer-events:none}
 .btng:hover{transform:translateY(-2px);box-shadow:0 10px 42px rgba(150,191,72,0.5)}
 .btng:hover::after{animation:shimmer .55s ease forwards}
@@ -140,7 +144,8 @@ h1.words-in .w-inner{transform:translateY(0);opacity:1}
 .sbar{display:flex;align-items:center;justify-content:center;background:rgba(8,8,9,0.6);border-bottom:1px solid rgba(150,191,72,0.06);overflow-x:auto}
 .sbi{display:flex;align-items:center;gap:7px;padding:10px 22px;border-right:1px solid rgba(255,255,255,0.05);font-size:10px;color:var(--mx);font-family:var(--mono);white-space:nowrap;flex-shrink:0}
 .sbi:last-child{border:none}
-.sdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;position:relative}
+.sdot::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:1px solid rgba(150,191,72,.5);opacity:0;animation:sdotRipple 2.4s ease-out infinite}
 .sbi b{color:#fff}
 
 /* ============ SECTION HEADERS ============ */
@@ -148,7 +153,7 @@ h1.words-in .w-inner{transform:translateY(0);opacity:1}
 .stag{display:inline-flex;align-items:center;gap:8px;font-size:10.5px;color:var(--g);letter-spacing:1.8px;text-transform:uppercase;margin-bottom:14px;font-weight:700;font-family:var(--disp)}
 .stag::before{content:'';width:18px;height:1px;background:linear-gradient(90deg,var(--g),transparent)}
 .stit{font-family:var(--disp);font-size:clamp(26px,3.6vw,40px);font-weight:700;color:#fff;letter-spacing:-1.4px;margin-bottom:12px;line-height:1.08}
-.stit em{font-style:normal;color:var(--g)}
+.stit em{font-style:normal;background:linear-gradient(120deg,#d6f59a,#b8e05a 40%,#96BF48 70%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 14px rgba(150,191,72,0.3))}
 .ssub{font-size:clamp(13px,1.5vw,15px);color:var(--mx);line-height:1.7;margin-bottom:36px;font-weight:300;max-width:560px}
 .shead-c{text-align:center}
 .shead-c .stag{justify-content:center}
@@ -473,6 +478,7 @@ footer{border-top:1px solid rgba(150,191,72,0.08);padding:clamp(28px,4vw,40px) v
 </style>
 </head>
 <body>
+<div id="pgbar"></div>
 
 <!-- BRAND SYMBOLS — reused via <use> -->
 <svg style="display:none" aria-hidden="true">
@@ -529,6 +535,8 @@ footer{border-top:1px solid rgba(150,191,72,0.08);padding:clamp(28px,4vw,40px) v
 <div class="hero">
   <div class="hero-halo"></div>
   <div class="hero-scan"></div>
+  <div style="position:absolute;width:420px;height:420px;left:-110px;top:50%;transform:translateY(-60%);background:radial-gradient(circle,rgba(150,191,72,0.07),transparent 70%);filter:blur(72px);border-radius:50%;pointer-events:none;animation:floaty 16s ease-in-out infinite;z-index:0"></div>
+  <div style="position:absolute;width:360px;height:360px;right:-90px;top:15%;background:radial-gradient(circle,rgba(80,170,40,0.05),transparent 70%);filter:blur(60px);border-radius:50%;pointer-events:none;animation:floaty 20s ease-in-out infinite reverse;animation-delay:-8s;z-index:0"></div>
   <h1 id="heroTitle">Vos paniers abandonnés<br>relancés par appel <em>automatisé</em></h1>
   <div class="hmeta" id="heroMeta">
     <div class="hmi">v2.4.1 · <b>stable</b></div><div class="hmi-sep"></div>
@@ -1293,6 +1301,29 @@ function toggleFaq(el){
   document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
   if(!isOpen)el.classList.add('open');
 }
+
+// ========= SCROLL PROGRESS BAR =========
+(()=>{
+  const bar=document.getElementById('pgbar');
+  window.addEventListener('scroll',()=>{
+    const s=document.documentElement;
+    bar.style.width=((s.scrollTop/(s.scrollHeight-s.clientHeight))*100)+'%';
+  },{passive:true});
+})();
+
+// ========= CARD SPOTLIGHT HOVER =========
+document.querySelectorAll('.met,.step').forEach(card=>{
+  const spot=document.createElement('div');
+  spot.style.cssText='position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(150,191,72,0.075),transparent 70%);pointer-events:none;transform:translate(-50%,-50%);opacity:0;transition:opacity .35s ease;z-index:0;will-change:left,top';
+  card.appendChild(spot);
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    spot.style.left=(e.clientX-r.left)+'px';
+    spot.style.top=(e.clientY-r.top)+'px';
+    spot.style.opacity='1';
+  });
+  card.addEventListener('mouseleave',()=>{spot.style.opacity='0';});
+});
 
 // ========= INIT =========
 for(let i=0;i<5;i++)rows.push(rnd());
