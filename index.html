@@ -719,9 +719,9 @@ footer{border-top:1px solid rgba(150,191,72,0.08);padding:clamp(28px,4vw,40px) v
       <div class="roi-tag">Projection mensuelle</div>
       <div class="roi-item"><div class="roi-rl">Paniers abandonnés / mois</div><div class="roi-rv" id="r-paniers">412</div><div class="roi-rsub" id="r-sub1">sur ~588 paniers créés</div></div>
       <div class="roi-item"><div class="roi-rl">Clients contactés (3 tentatives)</div><div class="roi-rv" id="r-contacts">358</div><div class="roi-rsub">~87% de taux de contact cumulé</div></div>
-      <div class="roi-item"><div class="roi-rl">CA récupéré / mois</div><div class="roi-rv" id="r-mensuel">6 068 €</div><div class="roi-rsub">~20% de conversion sur appels décrochés</div></div>
+      <div class="roi-item"><div class="roi-rl">CA récupéré / mois</div><div class="roi-rv" id="r-mensuel">6 068 €</div><div class="roi-rsub">&gt;15% de conversion sur appels décrochés</div></div>
       <div class="roi-item"><div class="roi-rl">CA récupéré / an</div><div class="roi-rv" id="r-annuel">72 816 €</div><div class="roi-rsub">sans aucune intervention humaine</div></div>
-      <div class="roi-note">Méthodologie : abandon 70% (Baymard, 2024) · 3 tentatives · T1 ~50%, T2 ~25%, T3 ~12% = ~87% contact · ~20% conversion sur décrochés (Optiserv, 2026) · taux global ~17%. Projections.</div>
+      <div class="roi-note">Méthodologie : abandon 70% (Baymard, 2024) · 3 tentatives · T1 ~50%, T2 ~25%, T3 ~12% = ~87% contact · &gt;15% conversion sur décrochés · taux global &gt;13%. Projections.</div>
     </div>
   </div>
 </div>
@@ -1147,7 +1147,7 @@ function calcROI(){
   const t3=Math.round((abandonnes-t1-t2)*0.50);
   const totalContacts=t1+t2+t3;
   const tauxContact=Math.round((totalContacts/abandonnes)*100);
-  const mensuel=Math.round(totalContacts*0.20*pm);
+  const mensuel=Math.round(totalContacts*0.15*pm);
   const annuel=mensuel*12;
 
   function setRV(id,val){const el=document.getElementById(id);if(!el)return;if(el.textContent!==val){el.textContent=val;flashROI(id);}}
