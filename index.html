@@ -534,6 +534,8 @@ footer{border-top:1px solid rgba(150,191,72,0.08);padding:clamp(28px,4vw,40px) v
 <div class="hero">
   <div class="hero-halo"></div>
   <div class="hero-scan"></div>
+  <div style="position:absolute;width:420px;height:420px;left:-110px;top:50%;transform:translateY(-60%);background:radial-gradient(circle,rgba(150,191,72,0.07),transparent 70%);filter:blur(72px);border-radius:50%;pointer-events:none;animation:floaty 16s ease-in-out infinite;z-index:0"></div>
+  <div style="position:absolute;width:360px;height:360px;right:-90px;top:15%;background:radial-gradient(circle,rgba(80,170,40,0.05),transparent 70%);filter:blur(60px);border-radius:50%;pointer-events:none;animation:floaty 20s ease-in-out infinite reverse;animation-delay:-8s;z-index:0"></div>
   <h1 id="heroTitle">Vos paniers abandonnés<br>relancés par appel <em>automatisé</em></h1>
   <div class="hmeta" id="heroMeta">
     <div class="hmi">v2.4.1 · <b>stable</b></div><div class="hmi-sep"></div>
@@ -1307,6 +1309,20 @@ function toggleFaq(el){
     bar.style.width=((s.scrollTop/(s.scrollHeight-s.clientHeight))*100)+'%';
   },{passive:true});
 })();
+
+// ========= CARD SPOTLIGHT HOVER =========
+document.querySelectorAll('.met,.step').forEach(card=>{
+  const spot=document.createElement('div');
+  spot.style.cssText='position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(150,191,72,0.075),transparent 70%);pointer-events:none;transform:translate(-50%,-50%);opacity:0;transition:opacity .35s ease;z-index:0;will-change:left,top';
+  card.appendChild(spot);
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    spot.style.left=(e.clientX-r.left)+'px';
+    spot.style.top=(e.clientY-r.top)+'px';
+    spot.style.opacity='1';
+  });
+  card.addEventListener('mouseleave',()=>{spot.style.opacity='0';});
+});
 
 // ========= INIT =========
 for(let i=0;i<5;i++)rows.push(rnd());
